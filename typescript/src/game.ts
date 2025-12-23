@@ -96,9 +96,10 @@ export class Game {
         } else {
 
           // TODO: causes bug needs (place() || 0)
-          this.placesOnBoard[this.currentPlayer] = new PlaceOnBoard(this.placesOnBoard[this.currentPlayer]?.place()+ roll);
+          const currentPlayerPlace = this.placesOnBoard[this.currentPlayer]?.place();
+          this.placesOnBoard[this.currentPlayer] = new PlaceOnBoard((currentPlayerPlace || 0) + roll);
           if (this.placesOnBoard[this.currentPlayer].place() > 11) {
-            this.placesOnBoard[this.currentPlayer] = new PlaceOnBoard((this.placesOnBoard[this.currentPlayer]?.place() || 0) - 12);
+            this.placesOnBoard[this.currentPlayer] = new PlaceOnBoard((this.placesOnBoard[this.currentPlayer].place() || 0) - 12);
           }
 
           this.console.log(this.players[this.currentPlayer] + "'s new location is " + this.placesOnBoard[this.currentPlayer].place());

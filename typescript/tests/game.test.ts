@@ -38,13 +38,15 @@ describe('The test environment', () => {
 
             game.roll(rollNumber);
 
+            const categories = ["Rock", "Science", "Sports", "Rock", "Pop", "Science", "Sports", "Rock", "Pop", "Science", "Sports"]
+            const categoryQuestionNumber = [0, 0, 0, 1, 0, 0, 0, 1, 0, 0]
             expect(consoleWrapper.getMessages()[0]).to.be.eq("Chet was added");
             expect(consoleWrapper.getMessages()[1]).to.be.eq("They are player number 1");
             expect(consoleWrapper.getMessages()[2]).to.be.eq("Chet is the current player");
             expect(consoleWrapper.getMessages()[3]).to.be.eq(`They have rolled a ${rollNumber}`);
-            expect(consoleWrapper.getMessages()[4]).to.be.eq("Chet's new location is NaN");
-            expect(consoleWrapper.getMessages()[5]).to.be.eq("The category is Rock");
-            expect(consoleWrapper.getMessages()[6]).to.be.eq("Rock Question 0");
+            expect(consoleWrapper.getMessages()[4]).to.be.eq(`Chet's new location is ${rollNumber}`);
+            expect(consoleWrapper.getMessages()[5]).to.be.eq(`The category is ${categories[rollNumber]}`);
+            expect(consoleWrapper.getMessages()[6]).to.be.eq(`${categories[rollNumber]} Question 0`);
         });
     }
 
@@ -61,11 +63,10 @@ describe('The test environment', () => {
             game.wasCorrectlyAnswered()
 
             const categories = ["Rock", "Science", "Sports", "Rock", "Pop", "Science", "Sports", "Rock", "Pop", "Science", "Sports"]
-            const categoryQuestionNumber = [0, 0, 0, 1, 0, 0, 0, 1, 0, 0]
             expect(consoleWrapper.getMessages()[12]).to.be.eq(`They have rolled a ${rollNumber}`);
             expect(consoleWrapper.getMessages()[13]).to.be.eq(`Pat's new location is ${rollNumber}`);
             expect(consoleWrapper.getMessages()[14]).to.be.eq(`The category is ${categories[rollNumber]}`);
-            expect(consoleWrapper.getMessages()[15]).to.be.eq(`${categories[rollNumber]} Question ${categoryQuestionNumber[rollNumber]}`);
+            expect(consoleWrapper.getMessages()[15]).to.be.eq(`${categories[rollNumber]} Question 1`);
             expect(consoleWrapper.getMessages()[16]).to.be.eq("Answer was corrent!!!!");
             expect(consoleWrapper.getMessages()[17]).to.be.eq("Pat now has 1 Gold Coins.");
         });
