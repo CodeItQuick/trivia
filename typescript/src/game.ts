@@ -22,6 +22,20 @@ export class PlaceOnBoard {
     place() {
         return this._place
     }
+    updated(roll: number) {
+        this._place = this._place + roll;
+        if (this._place > 11) {
+            this._place = this._place - 12;
+        }
+    }
+    createNewPlace(roll: number) {
+        this._place = this._place + roll;
+        if (this._place > 11) {
+            this._place = this._place - 12;
+        }
+        return this;
+    }
+
 }
 
 
@@ -75,16 +89,13 @@ export class Game {
     public roll(roll: number) {
         this.console.log(this.players[this.currentPlayer] + " is the current player");
         this.console.log("They have rolled a " + roll);
-    
+
         if (this.inPenaltyBox[this.currentPlayer]) {
-          if (roll % 2 != 0) {
+          if (roll % 2 !== 0) {
             this.isGettingOutOfPenaltyBox = true;
     
             this.console.log(this.players[this.currentPlayer] + " is getting out of the penalty box");
-            this.placesOnBoard[this.currentPlayer] = new PlaceOnBoard(this.placesOnBoard[this.currentPlayer].place() + roll);
-            if (this.placesOnBoard[this.currentPlayer].place() > 11) {
-              this.placesOnBoard[this.currentPlayer] = new PlaceOnBoard(this.placesOnBoard[this.currentPlayer].place() - 12);
-            }
+            this.placesOnBoard[this.currentPlayer].updated(roll);
 
             this.console.log(this.players[this.currentPlayer] + "'s new location is " + this.placesOnBoard[this.currentPlayer].place());
             this.console.log("The category is " + this.currentCategory());
@@ -95,14 +106,9 @@ export class Game {
           }
         } else {
 
-          // TODO: causes bug needs (place() || 0)
-          const currentPlayerPlace = this.placesOnBoard[this.currentPlayer]?.place();
-          this.placesOnBoard[this.currentPlayer] = new PlaceOnBoard((currentPlayerPlace || 0) + roll);
-          if (this.placesOnBoard[this.currentPlayer].place() > 11) {
-            this.placesOnBoard[this.currentPlayer] = new PlaceOnBoard((this.placesOnBoard[this.currentPlayer].place() || 0) - 12);
-          }
+          this.placesOnBoard[this.currentPlayer] = new PlaceOnBoard(0).createNewPlace(roll);
 
-          this.console.log(this.players[this.currentPlayer] + "'s new location is " + this.placesOnBoard[this.currentPlayer].place());
+          this.console.log(this.players[this.currentPlayer] + "'s new location is " + this.placesOnBoard[this.currentPlayer]?.place());
           this.console.log("The category is " + this.currentCategory());
           this.askQuestion();
         }
