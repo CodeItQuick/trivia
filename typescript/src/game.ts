@@ -1,88 +1,5 @@
-export class ConsoleWrapper {
-    private _existingMessages: string[];
-    constructor(existingMessages = []) {
-        this._existingMessages = existingMessages;
-    }
-
-    getMessages() {
-        return this._existingMessages
-    }
-
-    log(message: string | undefined) {
-        console.log(message)
-        this._existingMessages.push(message || '');
-    }
-}
-
-export class PlaceOnBoard {
-    private _place = 0;
-    constructor(place) {
-        this._place = place;
-    }
-    place() {
-        return this._place
-    }
-    updated(roll: number) {
-        this._place = this._place + roll;
-        if (this._place > 11) {
-            this._place = this._place - 12;
-        }
-    }
-    createNewPlace(roll: number) {
-        this._place = this._place + roll;
-        if (this._place > 11) {
-            this._place = this._place - 12;
-        }
-        return this;
-    }
-
-}
-
-export class Places {
-    private placesOnBoard: Array<PlaceOnBoard> = [];
-    constructor(placesOnBoard) {
-        this.placesOnBoard = placesOnBoard;
-    }
-
-    addPlayer(playerNumber: number) {
-        this.placesOnBoard[playerNumber] = new PlaceOnBoard(0);
-    }
-
-    updatePlayer(currentPlayer: number, roll: number) {
-        this.placesOnBoard[currentPlayer] = new PlaceOnBoard(roll);
-    }
-
-    playerLocation(currentPlayer: number) {
-        return this.placesOnBoard[currentPlayer].place();
-    }
-
-    currentCategory(currentPlayer: number): string {
-        if (this.placesOnBoard[currentPlayer]?.place() === 0)
-            return 'Pop';
-        if (this.placesOnBoard[currentPlayer].place() === 4)
-            return 'Pop';
-        if (this.placesOnBoard[currentPlayer].place() === 8)
-            return 'Pop';
-        if (this.placesOnBoard[currentPlayer].place() === 1)
-            return 'Science';
-        if (this.placesOnBoard[currentPlayer].place() === 5)
-            return 'Science';
-        if (this.placesOnBoard[currentPlayer].place() === 9)
-            return 'Science';
-        if (this.placesOnBoard[currentPlayer].place() === 2)
-            return 'Sports';
-        if (this.placesOnBoard[currentPlayer].place() === 6)
-            return 'Sports';
-        if (this.placesOnBoard[currentPlayer].place() === 10)
-            return 'Sports';
-        return 'Rock';
-    }
-
-    createNewPlace(currentPlayer: number, roll: number) {
-        this.placesOnBoard[currentPlayer] = new PlaceOnBoard(0).createNewPlace(roll);
-    }
-}
-
+import {Places} from "./places";
+import {ConsoleWrapper} from "./consoleWrapper";
 
 export class Game {
 
@@ -161,14 +78,16 @@ export class Game {
         }
     }
 
-    private askQuestion(): void {
-        if (this.places.currentCategory(this.currentPlayer) == 'Pop')
+    askQuestion(): void {
+        const currentPlayerCategory = this.places.currentCategory(this.currentPlayer);
+
+        if (currentPlayerCategory === 'Pop')
             this.console.log(this.popQuestions.shift());
-        if (this.places.currentCategory(this.currentPlayer) == 'Science')
+        if (currentPlayerCategory === 'Science')
             this.console.log(this.scienceQuestions.shift());
-        if (this.places.currentCategory(this.currentPlayer) == 'Sports')
+        if (currentPlayerCategory === 'Sports')
             this.console.log(this.sportsQuestions.shift());
-        if (this.places.currentCategory(this.currentPlayer) == 'Rock')
+        if (currentPlayerCategory === 'Rock')
             this.console.log(this.rockQuestions.shift());
     }
 
