@@ -38,11 +38,56 @@ export class PlaceOnBoard {
 
 }
 
+export class Places {
+    private placesOnBoard: Array<PlaceOnBoard> = [];
+    constructor(placesOnBoard) {
+        this.placesOnBoard = placesOnBoard;
+    }
+
+    addPlayer(playerNumber: number) {
+        this.placesOnBoard[playerNumber] = new PlaceOnBoard(0);
+    }
+
+    updatePlayer(currentPlayer: number, roll: number) {
+        this.placesOnBoard[currentPlayer] = new PlaceOnBoard(roll);
+    }
+
+    playerLocation(currentPlayer: number) {
+        return this.placesOnBoard[currentPlayer].place();
+    }
+
+    currentCategory(currentPlayer: number): string {
+        if (this.placesOnBoard[currentPlayer]?.place() === 0)
+            return 'Pop';
+        if (this.placesOnBoard[currentPlayer].place() === 4)
+            return 'Pop';
+        if (this.placesOnBoard[currentPlayer].place() === 8)
+            return 'Pop';
+        if (this.placesOnBoard[currentPlayer].place() === 1)
+            return 'Science';
+        if (this.placesOnBoard[currentPlayer].place() === 5)
+            return 'Science';
+        if (this.placesOnBoard[currentPlayer].place() === 9)
+            return 'Science';
+        if (this.placesOnBoard[currentPlayer].place() === 2)
+            return 'Sports';
+        if (this.placesOnBoard[currentPlayer].place() === 6)
+            return 'Sports';
+        if (this.placesOnBoard[currentPlayer].place() === 10)
+            return 'Sports';
+        return 'Rock';
+    }
+
+    createNewPlace(currentPlayer: number, roll: number) {
+        this.placesOnBoard[currentPlayer] = new PlaceOnBoard(0).createNewPlace(roll);
+    }
+}
+
 
 export class Game {
 
     private players: Array<string> = [];
-    private placesOnBoard: Array<PlaceOnBoard> = [];
+    private places: Places = new Places([]);
     private purses: Array<number> = [];
     private inPenaltyBox: Array<boolean> = [];
     private currentPlayer: number = 0;
@@ -72,7 +117,7 @@ export class Game {
 
     public add(name: string): boolean {
         this.players.push(name);
-        this.placesOnBoard[this.howManyPlayers()] = new PlaceOnBoard(0);
+        this.places.addPlayer(this.howManyPlayers());
         this.purses[this.howManyPlayers()] = 0;
         this.inPenaltyBox[this.howManyPlayers()] = false;
 
@@ -95,10 +140,10 @@ export class Game {
             this.isGettingOutOfPenaltyBox = true;
     
             this.console.log(this.players[this.currentPlayer] + " is getting out of the penalty box");
-            this.placesOnBoard[this.currentPlayer].updated(roll);
+            this.places.updatePlayer(this.currentPlayer, roll);
 
-            this.console.log(this.players[this.currentPlayer] + "'s new location is " + this.placesOnBoard[this.currentPlayer].place());
-            this.console.log("The category is " + this.currentCategory());
+            this.console.log(this.players[this.currentPlayer] + "'s new location is " + this.places.playerLocation(this.currentPlayer));
+            this.console.log("The category is " + this.places.currentCategory(this.currentPlayer));
             this.askQuestion();
           } else {
             this.console.log(this.players[this.currentPlayer] + " is not getting out of the penalty box");
@@ -106,45 +151,25 @@ export class Game {
           }
         } else {
 
-          this.placesOnBoard[this.currentPlayer] = new PlaceOnBoard(0).createNewPlace(roll);
+          this.places.updatePlayer(this.currentPlayer, roll);
+          this.places.createNewPlace(this.currentPlayer, roll);
 
-          this.console.log(this.players[this.currentPlayer] + "'s new location is " + this.placesOnBoard[this.currentPlayer]?.place());
-          this.console.log("The category is " + this.currentCategory());
+          const playerLocation = this.places?.playerLocation(this.currentPlayer);
+          this.console.log(this.players[this.currentPlayer] + "'s new location is " + playerLocation);
+          this.console.log("The category is " + this.places.currentCategory(this.currentPlayer));
           this.askQuestion();
         }
     }
 
     private askQuestion(): void {
-        if (this.currentCategory() == 'Pop')
+        if (this.places.currentCategory(this.currentPlayer) == 'Pop')
             this.console.log(this.popQuestions.shift());
-        if (this.currentCategory() == 'Science')
+        if (this.places.currentCategory(this.currentPlayer) == 'Science')
             this.console.log(this.scienceQuestions.shift());
-        if (this.currentCategory() == 'Sports')
+        if (this.places.currentCategory(this.currentPlayer) == 'Sports')
             this.console.log(this.sportsQuestions.shift());
-        if (this.currentCategory() == 'Rock')
+        if (this.places.currentCategory(this.currentPlayer) == 'Rock')
             this.console.log(this.rockQuestions.shift());
-    }
-
-    private currentCategory(): string {
-        if (this.placesOnBoard[this.currentPlayer]?.place() === 0)
-            return 'Pop';
-        if (this.placesOnBoard[this.currentPlayer].place() === 4)
-            return 'Pop';
-        if (this.placesOnBoard[this.currentPlayer].place() === 8)
-            return 'Pop';
-        if (this.placesOnBoard[this.currentPlayer].place() === 1)
-            return 'Science';
-        if (this.placesOnBoard[this.currentPlayer].place() === 5)
-            return 'Science';
-        if (this.placesOnBoard[this.currentPlayer].place() === 9)
-            return 'Science';
-        if (this.placesOnBoard[this.currentPlayer].place() === 2)
-            return 'Sports';
-        if (this.placesOnBoard[this.currentPlayer].place() === 6)
-            return 'Sports';
-        if (this.placesOnBoard[this.currentPlayer].place() === 10)
-            return 'Sports';
-        return 'Rock';
     }
 
     private didPlayerWin(): boolean {
