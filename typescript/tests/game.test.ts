@@ -155,6 +155,7 @@ describe('The test environment', () => {
         game.wasCorrectlyAnswered();
         game.roll(7);
         game.wasCorrectlyAnswered();
+        game.roll(7)
 
         const notAWinner = game.wasCorrectlyAnswered();
 
