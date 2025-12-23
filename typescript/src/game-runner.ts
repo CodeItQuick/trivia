@@ -1,8 +1,9 @@
-import {Game} from './game';
+import {ConsoleWrapper, Game} from './game';
+import * as console from "node:console";
 
 export class GameRunner {
-    public static main(): void {
-        const game = new Game();
+    public static main(consoleWrapper: ConsoleWrapper | typeof console = console): void {
+        const game = new Game(consoleWrapper);
         game.add("Chet");
         game.add("Pat");
         game.add("Sue");
@@ -12,10 +13,10 @@ export class GameRunner {
 
             game.roll(Math.floor(Math.random() * 6) + 1);
         
-            if (Math.floor(Math.random() * 10) == 7) {
-            notAWinner = game.wrongAnswer();
+            if (Math.floor(Math.random() * 10) === 7) {
+                notAWinner = game.wrongAnswer();
             } else {
-            notAWinner = game.wasCorrectlyAnswered();
+                notAWinner = game.wasCorrectlyAnswered();
             }
         
         } while (notAWinner);
