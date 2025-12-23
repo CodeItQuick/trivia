@@ -10,10 +10,11 @@
   "author": "Felix Blechschmitt",
   "license": "GPL-3.0",
   "dependencies": {
+    "@vitest/coverage-v8": "^4.0.16",
     "typescript": "^5.5.4"
   },
   "devDependencies": {
     "ts-node": "^10.9.2",
-    "vitest": "^2.0.5"
+    "vitest": "4.0.16"
   }
 }

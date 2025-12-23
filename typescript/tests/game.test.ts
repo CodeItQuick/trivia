@@ -60,7 +60,7 @@ describe('The test environment', () => {
             game.roll(rollNumber);
             game.wasCorrectlyAnswered()
 
-            const categories = ["Rock", "Science", "Sports", "Rock", "Pop", "Science", "Sports", "Rock", "Pop", "Science"]
+            const categories = ["Rock", "Science", "Sports", "Rock", "Pop", "Science", "Sports", "Rock", "Pop", "Science", "Sports"]
             const categoryQuestionNumber = [0, 0, 0, 1, 0, 0, 0, 1, 0, 0]
             expect(consoleWrapper.getMessages()[12]).to.be.eq(`They have rolled a ${rollNumber}`);
             expect(consoleWrapper.getMessages()[13]).to.be.eq(`Pat's new location is ${rollNumber}`);
@@ -112,6 +112,20 @@ describe('The test environment', () => {
         expect(consoleWrapper.getMessages()[8]).to.be.eq("Chet now has NaN Gold Coins.");
         expect(notAWinner).to.eq(true);
     });
+    it('when two player game after game roll wasCorrectlyAnswered should give player Gold Coins', () => {
+        const consoleWrapper = new ConsoleWrapper();
+        const game = new Game(consoleWrapper);
+        game.add("Chet")
+        game.add("Pat")
+        game.wrongAnswer();
+
+        const notAWinner = game.wasCorrectlyAnswered();
+
+        expect(consoleWrapper.getMessages()[6]).to.be.eq("Answer was corrent!!!!");
+        expect(consoleWrapper.getMessages()[7]).to.be.eq("Pat now has 1 Gold Coins.");
+        expect(notAWinner).to.eq(true);
+    });
+
     it('when two player game after enough correct answers should end game', () => {
         const consoleWrapper = new ConsoleWrapper();
         const game = new Game(consoleWrapper);
@@ -143,19 +157,5 @@ describe('The test environment', () => {
         const notAWinner = game.wasCorrectlyAnswered();
 
         expect(notAWinner).to.eq(false);
-    });
-
-    it('when two player game after game roll wasCorrectlyAnswered should give player Gold Coins', () => {
-        const consoleWrapper = new ConsoleWrapper();
-        const game = new Game(consoleWrapper);
-        game.add("Chet")
-        game.add("Pat")
-        game.wrongAnswer();
-
-        const notAWinner = game.wasCorrectlyAnswered();
-
-        expect(consoleWrapper.getMessages()[6]).to.be.eq("Answer was corrent!!!!");
-        expect(consoleWrapper.getMessages()[7]).to.be.eq("Pat now has 1 Gold Coins.");
-        expect(notAWinner).to.eq(true);
     });
 });
