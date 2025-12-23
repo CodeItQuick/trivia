@@ -31,7 +31,7 @@ describe('The test environment', () => {
     });
 
     for (const rollNumber of [1, 2, 3, 4, 5, 6, 7, 8, 9]) {
-        it(`when game rolled a ${rollNumber} should return new location is NaN with Rock Question`, () => {
+        it(`when one player game rolled a ${rollNumber} should return new location is NaN with Rock Question`, () => {
             const consoleWrapper = new ConsoleWrapper();
             const game = new Game(consoleWrapper);
             game.add("Chet")
@@ -45,6 +45,29 @@ describe('The test environment', () => {
             expect(consoleWrapper.getMessages()[4]).to.be.eq("Chet's new location is NaN");
             expect(consoleWrapper.getMessages()[5]).to.be.eq("The category is Rock");
             expect(consoleWrapper.getMessages()[6]).to.be.eq("Rock Question 0");
+        });
+    }
+
+    for (const rollNumber of [1, 2, 3, 4, 5, 6, 7, 8, 9]) {
+        it(`when two player game rolled a ${rollNumber} should change player category give second player gold coins`, () => {
+            const consoleWrapper = new ConsoleWrapper();
+            const game = new Game(consoleWrapper);
+            game.add("Chet")
+            game.add("Pat")
+            game.roll(rollNumber);
+            game.wasCorrectlyAnswered()
+
+            game.roll(rollNumber);
+            game.wasCorrectlyAnswered()
+
+            const categories = ["Rock", "Science", "Sports", "Rock", "Pop", "Science", "Sports", "Rock", "Pop", "Science"]
+            const categoryQuestionNumber = [0, 0, 0, 1, 0, 0, 0, 1, 0, 0]
+            expect(consoleWrapper.getMessages()[12]).to.be.eq(`They have rolled a ${rollNumber}`);
+            expect(consoleWrapper.getMessages()[13]).to.be.eq(`Pat's new location is ${rollNumber}`);
+            expect(consoleWrapper.getMessages()[14]).to.be.eq(`The category is ${categories[rollNumber]}`);
+            expect(consoleWrapper.getMessages()[15]).to.be.eq(`${categories[rollNumber]} Question ${categoryQuestionNumber[rollNumber]}`);
+            expect(consoleWrapper.getMessages()[16]).to.be.eq("Answer was corrent!!!!");
+            expect(consoleWrapper.getMessages()[17]).to.be.eq("Pat now has 1 Gold Coins.");
         });
     }
 
