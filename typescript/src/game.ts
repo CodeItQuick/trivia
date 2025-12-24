@@ -84,42 +84,33 @@ export class Game {
         }
 
         this.console.log(this.players[this.currentPlayer] + "'s new location is " + this.places[this.currentPlayer]);
-        this.console.log("The category is " + this.currentCategory());
         this.askQuestion();
 
     }
 
     private askQuestion(): void {
-        if (this.currentCategory() == 'Pop')
-            this.console.log(this.popQuestions.shift());
-        if (this.currentCategory() == 'Science')
-            this.console.log(this.scienceQuestions.shift());
-        if (this.currentCategory() == 'Sports')
-            this.console.log(this.sportsQuestions.shift());
-        if (this.currentCategory() == 'Rock')
-            this.console.log(this.rockQuestions.shift());
-    }
+        let category = "Rock"
+        let playerBoardPosition = this.places[this.currentPlayer];
+        if (playerBoardPosition % 4 === 0) {
+            category = 'Pop';
+        }
+        if (playerBoardPosition % 4 === 1) {
+            category = 'Science';
+        }
+        if (playerBoardPosition % 4 === 2) {
+            category = 'Sports';
+        }
 
-    private currentCategory(): string {
-        if (this.places[this.currentPlayer] == 0)
-            return 'Pop';
-        if (this.places[this.currentPlayer] == 4)
-            return 'Pop';
-        if (this.places[this.currentPlayer] == 8)
-            return 'Pop';
-        if (this.places[this.currentPlayer] == 1)
-            return 'Science';
-        if (this.places[this.currentPlayer] == 5)
-            return 'Science';
-        if (this.places[this.currentPlayer] == 9)
-            return 'Science';
-        if (this.places[this.currentPlayer] == 2)
-            return 'Sports';
-        if (this.places[this.currentPlayer] == 6)
-            return 'Sports';
-        if (this.places[this.currentPlayer] == 10)
-            return 'Sports';
-        return 'Rock';
+        this.console.log("The category is " + category);
+
+        if (category == 'Pop')
+            this.console.log(this.popQuestions.shift());
+        if (category == 'Science')
+            this.console.log(this.scienceQuestions.shift());
+        if (category == 'Sports')
+            this.console.log(this.sportsQuestions.shift());
+        if (category == 'Rock')
+            this.console.log(this.rockQuestions.shift());
     }
 
     private didPlayerWin(): boolean {
