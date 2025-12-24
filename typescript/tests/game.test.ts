@@ -37,6 +37,7 @@ describe('The test environment', () => {
             game.add("Chet")
 
             game.roll(rollNumber);
+            game.askQuestion()
 
             expect(consoleWrapper.getMessages()[0]).to.be.eq("Chet was added");
             expect(consoleWrapper.getMessages()[1]).to.be.eq("They are player number 1");
@@ -55,10 +56,12 @@ describe('The test environment', () => {
             game.add("Chet")
             game.add("Pat")
             game.roll(rollNumber);
+            game.askQuestion()
             game.wasCorrectlyAnswered()
             game.finishTurn()
 
             game.roll(rollNumber);
+            game.askQuestion()
             game.wasCorrectlyAnswered()
             game.finishTurn()
 
@@ -78,6 +81,7 @@ describe('The test environment', () => {
         const game = new Game(consoleWrapper);
         game.add("Chet")
         game.roll(7);
+        game.askQuestion()
         game.wrongAnswer();
 
         const winner = game.finishTurn()
@@ -94,14 +98,17 @@ describe('The test environment', () => {
         game.add("Chet")
         game.add("Pat")
         game.roll(7);
+        game.askQuestion();
         game.wrongAnswer();
         game.finishTurn();
+        game.roll(7);
+        game.askQuestion();
         game.wrongAnswer();
 
         const winner = game.finishTurn();
 
-        expect(consoleWrapper.getMessages()[11]).to.be.eq("Question was incorrectly answered");
-        expect(consoleWrapper.getMessages()[12]).to.be.eq("Pat was sent to the penalty box");
+        expect(consoleWrapper.getMessages()[16]).to.be.eq("Question was incorrectly answered");
+        expect(consoleWrapper.getMessages()[17]).to.be.eq("Pat was sent to the penalty box");
         expect(winner).to.eq(false);
     });
 
@@ -110,6 +117,7 @@ describe('The test environment', () => {
         const game = new Game(consoleWrapper);
         game.add("Chet")
         game.roll(7);
+        game.askQuestion();
 
         game.wasCorrectlyAnswered();
         const winner = game.finishTurn()

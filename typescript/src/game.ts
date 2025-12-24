@@ -74,11 +74,10 @@ export class Game {
         }
 
         this.console.log(this.players[this.currentPlayer] + "'s new location is " + this.places[this.currentPlayer]);
-        this.askQuestion();
 
     }
 
-    private askQuestion(): void {
+    public askQuestion(): void {
         let category = "Rock"
         let playerBoardPosition = this.places[this.currentPlayer];
         if (playerBoardPosition % 4 === 0) {
