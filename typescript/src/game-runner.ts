@@ -8,7 +8,7 @@ export class GameRunner {
         game.add("Pat");
         game.add("Sue");
 
-        let notAWinner;
+        let winner;
         do {
 
             game.roll(Math.floor(Math.random() * 6) + 1);
@@ -18,9 +18,9 @@ export class GameRunner {
             } else {
                 game.wasCorrectlyAnswered();
             }
-            notAWinner = game.finishTurn()
+            winner = game.finishTurn()
         
-        } while (notAWinner);
+        } while (!winner);
     }
 }
 

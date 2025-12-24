@@ -109,11 +109,11 @@ describe('The test environment', () => {
         game.roll(7);
 
         game.wasCorrectlyAnswered();
-        const notAWinner = game.finishTurn()
+        const winner = game.finishTurn()
 
         expect(consoleWrapper.getMessages()[7]).to.be.eq("Answer was corrent!!!!");
         expect(consoleWrapper.getMessages()[8]).to.be.eq("Chet now has NaN Gold Coins.");
-        expect(notAWinner).to.eq(true);
+        expect(winner).to.eq(false);
     });
     it('when two player game after game roll wasCorrectlyAnswered should give player Gold Coins', () => {
         const consoleWrapper = new ConsoleWrapper();
@@ -123,11 +123,11 @@ describe('The test environment', () => {
         game.wrongAnswer();
 
         game.wasCorrectlyAnswered();
-        const notAWinner = game.finishTurn()
+        const winner = game.finishTurn()
 
         expect(consoleWrapper.getMessages()[6]).to.be.eq("Answer was corrent!!!!");
         expect(consoleWrapper.getMessages()[7]).to.be.eq("Pat now has 1 Gold Coins.");
-        expect(notAWinner).to.eq(true);
+        expect(winner).to.eq(false);
     });
 
     it('when two player game after enough correct answers should end game', () => {
@@ -170,8 +170,8 @@ describe('The test environment', () => {
         game.finishTurn();
 
         game.wasCorrectlyAnswered();
-        const notAWinner = game.finishTurn();
+        const winner = game.finishTurn();
 
-        expect(notAWinner).to.eq(false);
+        expect(winner).to.eq(true);
     });
 });

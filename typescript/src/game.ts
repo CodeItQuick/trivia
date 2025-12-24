@@ -137,14 +137,13 @@ export class Game {
     }
 
     public finishTurn() {
-
-        const notAWinner = this.purses[this.currentPlayer] !== 6;
+        const winner = this.purses[this.currentPlayer] === 6;
 
         this.currentPlayer += 1;
         if (this.currentPlayer == this.players.length)
             this.currentPlayer = 0;
 
-        return notAWinner;
+        return winner;
     }
 
 }
