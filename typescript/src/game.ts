@@ -83,9 +83,9 @@ export class Game {
         }
     }
     public wrongAnswer(): void {
+        this.inPenaltyBox[this.currentPlayer] = true;
         this.console.log('Question was incorrectly answered');
         this.console.log(this.players[this.currentPlayer] + " was sent to the penalty box");
-        this.inPenaltyBox[this.currentPlayer] = true;
     }
 
     public wasCorrectlyAnswered(): void {
