@@ -29,9 +29,9 @@ export class Game {
     }
     public add(name: string): boolean {
         this.players.push(name);
-        this.places[this.players.length] = 0;
-        this.purses[this.players.length] = 0;
-        this.inPenaltyBox[this.players.length] = false;
+        this.places[this.players.length - 1] = 0;
+        this.purses[this.players.length - 1] = 0;
+        this.inPenaltyBox[this.players.length - 1] = false;
 
         this.console.log(name + " was added");
         this.console.log("They are player number " + this.players.length);
@@ -55,7 +55,7 @@ export class Game {
         }
     
         this.places[this.currentPlayer] = this.places[this.currentPlayer] + roll;
-        if (this.places[this.currentPlayer] > 11) {
+        if (this.places[this.currentPlayer] > 12) {
           this.places[this.currentPlayer] = this.places[this.currentPlayer] - 12;
         }
 
@@ -64,28 +64,23 @@ export class Game {
     }
 
     public askQuestion(): void {
-        let category = "Rock"
         let playerBoardPosition = this.places[this.currentPlayer];
         if (playerBoardPosition % 4 === 0) {
-            category = 'Pop';
+            this.console.log("The category is Pop");
+            this.console.log(this.popQuestions.shift());
         }
         if (playerBoardPosition % 4 === 1) {
-            category = 'Science';
+            this.console.log("The category is Science");
+            this.console.log(this.scienceQuestions.shift());
         }
         if (playerBoardPosition % 4 === 2) {
-            category = 'Sports';
-        }
-
-        this.console.log("The category is " + category);
-
-        if (category == 'Pop')
-            this.console.log(this.popQuestions.shift());
-        if (category == 'Science')
-            this.console.log(this.scienceQuestions.shift());
-        if (category == 'Sports')
+            this.console.log("The category is Sports");
             this.console.log(this.sportsQuestions.shift());
-        if (category == 'Rock')
+        }
+        if (playerBoardPosition % 4 === 3) {
+            this.console.log("The category is Rock");
             this.console.log(this.rockQuestions.shift());
+        }
     }
     public wrongAnswer(): void {
         this.console.log('Question was incorrectly answered');
@@ -109,8 +104,9 @@ export class Game {
         const winner = this.purses[this.currentPlayer] === 6;
 
         this.currentPlayer += 1;
-        if (this.currentPlayer == this.players.length)
+        if (this.currentPlayer == this.players.length) {
             this.currentPlayer = 0;
+        }
 
         return winner;
     }
