@@ -38,14 +38,9 @@ export class Game {
             this.popQuestions.push("Pop Question " + i);
             this.scienceQuestions.push("Science Question " + i);
             this.sportsQuestions.push("Sports Question " + i);
-            this.rockQuestions.push(this.createRockQuestion(i));
+            this.rockQuestions.push("Rock Question " + i);
           }
     }
-
-    private createRockQuestion(index: number): string {
-        return "Rock Question " + index;
-    }
-
     public add(name: string): boolean {
         this.players.push(name);
         this.places[this.players.length] = 0;
@@ -107,33 +102,22 @@ export class Game {
         if (category == 'Rock')
             this.console.log(this.rockQuestions.shift());
     }
-    public wrongAnswer(): boolean {
+    public wrongAnswer(): void {
         this.console.log('Question was incorrectly answered');
         this.console.log(this.players[this.currentPlayer] + " was sent to the penalty box");
         this.inPenaltyBox[this.currentPlayer] = true;
-    
-        this.currentPlayer += 1;
-        if (this.currentPlayer == this.players.length)
-            this.currentPlayer = 0;
-        return true;
     }
 
     public wasCorrectlyAnswered(): void {
-        if (this.inPenaltyBox[this.currentPlayer]) {
-            if (this.isGettingOutOfPenaltyBox) {
-              this.console.log('Answer was correct!!!!');
-              this.purses[this.currentPlayer] += 1;
-              this.console.log(this.players[this.currentPlayer] + " now has " +
-              this.purses[this.currentPlayer] + " Gold Coins.");
-            }
-          } else {
+        if (this.inPenaltyBox[this.currentPlayer] && !this.isGettingOutOfPenaltyBox) {
+            return;
+        }
       
-            this.console.log("Answer was corrent!!!!");
-      
-            this.purses[this.currentPlayer] += 1;
-            this.console.log(this.players[this.currentPlayer] + " now has " +
-                this.purses[this.currentPlayer] + " Gold Coins.");
-          }
+        this.purses[this.currentPlayer] += 1;
+
+        this.console.log("Answer was correct!!!!");
+        this.console.log(this.players[this.currentPlayer] + " now has " +
+            this.purses[this.currentPlayer] + " Gold Coins.");
     }
 
     public finishTurn() {

@@ -68,7 +68,7 @@ describe('The test environment', () => {
             expect(consoleWrapper.getMessages()[13]).to.be.eq(`Pat's new location is ${rollNumber % 12}`);
             expect(consoleWrapper.getMessages()[14]).to.be.eq(`The category is ${categories[rollNumber]}`);
             expect(consoleWrapper.getMessages()[15]).to.be.eq(`${categories[rollNumber]} Question ${categoryQuestionNumber[rollNumber]}`);
-            expect(consoleWrapper.getMessages()[16]).to.be.eq("Answer was corrent!!!!");
+            expect(consoleWrapper.getMessages()[16]).to.be.eq("Answer was correct!!!!");
             expect(consoleWrapper.getMessages()[17]).to.be.eq("Pat now has 1 Gold Coins.");
         });
     }
@@ -78,12 +78,13 @@ describe('The test environment', () => {
         const game = new Game(consoleWrapper);
         game.add("Chet")
         game.roll(7);
+        game.wrongAnswer();
 
-        const notAWinner = game.wrongAnswer();
+        const winner = game.finishTurn()
 
         expect(consoleWrapper.getMessages()[7]).to.be.eq("Question was incorrectly answered");
         expect(consoleWrapper.getMessages()[8]).to.be.eq("Chet was sent to the penalty box");
-        expect(notAWinner).to.eq(true);
+        expect(winner).to.eq(false);
     });
 
 
@@ -94,12 +95,14 @@ describe('The test environment', () => {
         game.add("Pat")
         game.roll(7);
         game.wrongAnswer();
+        game.finishTurn();
+        game.wrongAnswer();
 
-        const notAWinner = game.wrongAnswer();
+        const winner = game.finishTurn();
 
         expect(consoleWrapper.getMessages()[11]).to.be.eq("Question was incorrectly answered");
         expect(consoleWrapper.getMessages()[12]).to.be.eq("Pat was sent to the penalty box");
-        expect(notAWinner).to.eq(true);
+        expect(winner).to.eq(false);
     });
 
     it('when one player game after game roll wasCorrectlyAnswered should give player Gold Coins', () => {
@@ -111,7 +114,7 @@ describe('The test environment', () => {
         game.wasCorrectlyAnswered();
         const winner = game.finishTurn()
 
-        expect(consoleWrapper.getMessages()[7]).to.be.eq("Answer was corrent!!!!");
+        expect(consoleWrapper.getMessages()[7]).to.be.eq("Answer was correct!!!!");
         expect(consoleWrapper.getMessages()[8]).to.be.eq("Chet now has NaN Gold Coins.");
         expect(winner).to.eq(false);
     });
@@ -121,11 +124,12 @@ describe('The test environment', () => {
         game.add("Chet")
         game.add("Pat")
         game.wrongAnswer();
+        game.finishTurn();
 
         game.wasCorrectlyAnswered();
         const winner = game.finishTurn()
 
-        expect(consoleWrapper.getMessages()[6]).to.be.eq("Answer was corrent!!!!");
+        expect(consoleWrapper.getMessages()[6]).to.be.eq("Answer was correct!!!!");
         expect(consoleWrapper.getMessages()[7]).to.be.eq("Pat now has 1 Gold Coins.");
         expect(winner).to.eq(false);
     });
