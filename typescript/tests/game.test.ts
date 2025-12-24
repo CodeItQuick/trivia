@@ -1,6 +1,7 @@
 import {describe, expect, it} from 'vitest';
 import {GameRunner} from '../src/game-runner';
-import {ConsoleWrapper, Game} from "../src/game";
+import {Game} from "../src/game";
+import {ConsoleWrapper} from "../src/consoleWrapper";
 
 describe('The test environment', () => {
     it('should pass', () => {

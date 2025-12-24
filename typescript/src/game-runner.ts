@@ -1,5 +1,6 @@
-import {ConsoleWrapper, Game} from './game';
+import {Game} from './game';
 import * as console from "node:console";
+import {ConsoleWrapper} from "./consoleWrapper";
 
 export class GameRunner {
     public static main(consoleWrapper: ConsoleWrapper | typeof console = console): void {
