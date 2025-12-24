@@ -48,20 +48,15 @@ export class Game {
 
     public add(name: string): boolean {
         this.players.push(name);
-        this.places[this.howManyPlayers()] = 0;
-        this.purses[this.howManyPlayers()] = 0;
-        this.inPenaltyBox[this.howManyPlayers()] = false;
+        this.places[this.players.length] = 0;
+        this.purses[this.players.length] = 0;
+        this.inPenaltyBox[this.players.length] = false;
 
         this.console.log(name + " was added");
         this.console.log("They are player number " + this.players.length);
 
         return true;
     }
-
-    private howManyPlayers(): number {
-        return this.players.length;
-    }
-
     public roll(roll: number) {
         this.console.log(this.players[this.currentPlayer] + " is the current player");
         this.console.log("They have rolled a " + roll);
@@ -112,11 +107,6 @@ export class Game {
         if (category == 'Rock')
             this.console.log(this.rockQuestions.shift());
     }
-
-    private didPlayerWin(): boolean {
-        return !(this.purses[this.currentPlayer] == 6)
-    }
-
     public wrongAnswer(): boolean {
         this.console.log('Question was incorrectly answered');
         this.console.log(this.players[this.currentPlayer] + " was sent to the penalty box");
@@ -128,28 +118,14 @@ export class Game {
         return true;
     }
 
-    public wasCorrectlyAnswered(): boolean {
+    public wasCorrectlyAnswered(): void {
         if (this.inPenaltyBox[this.currentPlayer]) {
             if (this.isGettingOutOfPenaltyBox) {
               this.console.log('Answer was correct!!!!');
               this.purses[this.currentPlayer] += 1;
               this.console.log(this.players[this.currentPlayer] + " now has " +
               this.purses[this.currentPlayer] + " Gold Coins.");
-      
-              var winner = this.didPlayerWin();
-              this.currentPlayer += 1;
-              if (this.currentPlayer == this.players.length)
-                this.currentPlayer = 0;
-      
-              return winner;
-            } else {
-              this.currentPlayer += 1;
-              if (this.currentPlayer == this.players.length)
-                this.currentPlayer = 0;
-              return true;
             }
-      
-      
           } else {
       
             this.console.log("Answer was corrent!!!!");
@@ -157,15 +133,18 @@ export class Game {
             this.purses[this.currentPlayer] += 1;
             this.console.log(this.players[this.currentPlayer] + " now has " +
                 this.purses[this.currentPlayer] + " Gold Coins.");
-      
-            var winner = this.didPlayerWin();
-      
-            this.currentPlayer += 1;
-            if (this.currentPlayer == this.players.length)
-                this.currentPlayer = 0;
-      
-            return winner;
           }
+    }
+
+    public finishTurn() {
+
+        const notAWinner = this.purses[this.currentPlayer] !== 6;
+
+        this.currentPlayer += 1;
+        if (this.currentPlayer == this.players.length)
+            this.currentPlayer = 0;
+
+        return notAWinner;
     }
 
 }

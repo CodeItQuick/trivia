@@ -56,9 +56,11 @@ describe('The test environment', () => {
             game.add("Pat")
             game.roll(rollNumber);
             game.wasCorrectlyAnswered()
+            game.finishTurn()
 
             game.roll(rollNumber);
             game.wasCorrectlyAnswered()
+            game.finishTurn()
 
             const categories = ["Rock", "Science", "Sports", "Rock", "Pop", "Science", "Sports", "Rock", "Pop", "Science", "Sports", "Rock", "Pop"]
             const categoryQuestionNumber = [0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0]
@@ -106,7 +108,8 @@ describe('The test environment', () => {
         game.add("Chet")
         game.roll(7);
 
-        const notAWinner = game.wasCorrectlyAnswered();
+        game.wasCorrectlyAnswered();
+        const notAWinner = game.finishTurn()
 
         expect(consoleWrapper.getMessages()[7]).to.be.eq("Answer was corrent!!!!");
         expect(consoleWrapper.getMessages()[8]).to.be.eq("Chet now has NaN Gold Coins.");
@@ -119,7 +122,8 @@ describe('The test environment', () => {
         game.add("Pat")
         game.wrongAnswer();
 
-        const notAWinner = game.wasCorrectlyAnswered();
+        game.wasCorrectlyAnswered();
+        const notAWinner = game.finishTurn()
 
         expect(consoleWrapper.getMessages()[6]).to.be.eq("Answer was corrent!!!!");
         expect(consoleWrapper.getMessages()[7]).to.be.eq("Pat now has 1 Gold Coins.");
@@ -133,28 +137,40 @@ describe('The test environment', () => {
         game.add("Pat")
         game.roll(7);
         game.wasCorrectlyAnswered();
+        game.finishTurn();
         game.roll(7);
         game.wasCorrectlyAnswered();
+        game.finishTurn();
         game.roll(7);
         game.wasCorrectlyAnswered();
+        game.finishTurn();
         game.roll(7);
         game.wasCorrectlyAnswered();
+        game.finishTurn();
         game.roll(7);
         game.wasCorrectlyAnswered();
+        game.finishTurn();
         game.roll(7);
         game.wasCorrectlyAnswered();
+        game.finishTurn();
         game.roll(7);
         game.wasCorrectlyAnswered();
+        game.finishTurn();
         game.roll(7);
         game.wasCorrectlyAnswered();
+        game.finishTurn();
         game.roll(7);
         game.wasCorrectlyAnswered();
+        game.finishTurn();
         game.roll(7);
         game.wasCorrectlyAnswered();
+        game.finishTurn();
         game.roll(7);
         game.wasCorrectlyAnswered();
+        game.finishTurn();
 
-        const notAWinner = game.wasCorrectlyAnswered();
+        game.wasCorrectlyAnswered();
+        const notAWinner = game.finishTurn();
 
         expect(notAWinner).to.eq(false);
     });

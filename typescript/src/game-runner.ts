@@ -14,10 +14,11 @@ export class GameRunner {
             game.roll(Math.floor(Math.random() * 6) + 1);
         
             if (Math.floor(Math.random() * 10) === 7) {
-                notAWinner = game.wrongAnswer();
+                game.wrongAnswer();
             } else {
-                notAWinner = game.wasCorrectlyAnswered();
+                game.wasCorrectlyAnswered();
             }
+            notAWinner = game.finishTurn()
         
         } while (notAWinner);
     }
