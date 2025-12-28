@@ -1,20 +1,16 @@
 import {ConsoleWrapper} from "./consoleWrapper";
 import {Board} from "./Board";
 import {Player} from "./player";
+import {Questioner} from "./questioner";
 
 export class Game {
 
     // board
     private board: Board = new Board();
-
     // player
     private players: Array<Player> = new Array<Player>();
-
     // questioner
-    private popQuestions: Array<string> = [];
-    private scienceQuestions: Array<string> = [];
-    private sportsQuestions: Array<string> = [];
-    private rockQuestions: Array<string> = [];
+    private questioner: Questioner = new Questioner();
 
     private console: ConsoleWrapper | typeof console;
 
@@ -22,12 +18,6 @@ export class Game {
 
         this.console = consoleWrapper;
 
-        for (let i = 0; i < 50; i++) {
-            this.popQuestions.push("Pop Question " + i);
-            this.scienceQuestions.push("Science Question " + i);
-            this.sportsQuestions.push("Sports Question " + i);
-            this.rockQuestions.push("Rock Question " + i);
-          }
     }
     public add(name: string): boolean {
         this.board.addPlayer(name);
@@ -52,23 +42,8 @@ export class Game {
     }
 
     public askQuestion(): void {
-        const playerBoardPosition = this.board.currentPlayerLocation();
-        if (playerBoardPosition % 4 === 0) {
-            this.console.log("The category is Pop");
-            this.console.log(this.popQuestions.shift());
-        }
-        if (playerBoardPosition % 4 === 1) {
-            this.console.log("The category is Science");
-            this.console.log(this.scienceQuestions.shift());
-        }
-        if (playerBoardPosition % 4 === 2) {
-            this.console.log("The category is Sports");
-            this.console.log(this.sportsQuestions.shift());
-        }
-        if (playerBoardPosition % 4 === 3) {
-            this.console.log("The category is Rock");
-            this.console.log(this.rockQuestions.shift());
-        }
+        this.console.log(this.questioner.category(this.board.currentPlayerLocation()));
+        this.console.log(this.questioner.question(this.board.currentPlayerLocation()));
     }
     public wrongAnswer(): void {
         const message = this.board.putPlayerInBox();
