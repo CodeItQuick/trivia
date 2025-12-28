@@ -55,4 +55,19 @@ export class Board {
         this.players[this.currentPlayer].placeInBox();
         return this.players[this.currentPlayer].name() + " was sent to the penalty box";
     }
+
+    isCurrentPlayerInBox() {
+        return this.players[this.currentPlayer].PenaltyBeingServed();
+    }
+
+    rewardPlayer() {
+        const coins = this.players[this.currentPlayer].currentCoins();
+
+        return this.players[this.currentPlayer].name() + " now has " +
+            coins + " Gold Coins."
+    }
+
+    hasPlayerWon() {
+        return this.players[this.currentPlayer].playerWon();
+    }
 }

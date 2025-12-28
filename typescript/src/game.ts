@@ -32,6 +32,22 @@ export class Player {
     placeInBox() {
         this.inPenaltyBox = true;
     }
+
+    isGettingOut() {
+        return this.isGettingOutOfPenaltyBox;
+    }
+
+    PenaltyBeingServed() {
+        return this.isInPenaltyBox && !this.isGettingOut;
+    }
+
+    currentCoins() {
+        return ++this.purse;
+    }
+
+    playerWon() {
+        return this.purse === 6;
+    }
 }
 
 export class Game {
@@ -42,8 +58,6 @@ export class Game {
     // player
     private players: Array<Player> = new Array<Player>();
     private purses: Array<number> = [];
-    private inPenaltyBox: Array<boolean> = [];
-    private isGettingOutOfPenaltyBox: boolean = false;
 
     // questioner
     private popQuestions: Array<string> = [];
@@ -67,8 +81,6 @@ export class Game {
     public add(name: string): boolean {
         this.board.addPlayer(name);
         this.players.push(new Player(name));
-        this.purses[this.players.length - 1] = 0;
-        this.inPenaltyBox[this.players.length - 1] = false;
 
         this.console.log(name + " was added");
         this.console.log("They are player number " + this.players.length);
@@ -115,19 +127,18 @@ export class Game {
     }
 
     public wasCorrectlyAnswered(): void {
-        if (this.inPenaltyBox[this.board.currentPlayerIdx()] && !this.isGettingOutOfPenaltyBox) {
+        if (this.board.isCurrentPlayerInBox()) {
             return;
         }
-      
-        this.purses[this.board.currentPlayerIdx()] += 1;
+
+        const message = this.board.rewardPlayer();
 
         this.console.log("Answer was correct!!!!");
-        this.console.log(this.board.currentPlayerName() + " now has " +
-            this.purses[this.board.currentPlayerIdx()] + " Gold Coins.");
+        this.console.log(message);
     }
 
     public currentPlayerWon() {
-        return this.purses[this.board.currentPlayerIdx()] === 6;
+        return this.board.hasPlayerWon();
     }
 
     public rotatePlayer() {
