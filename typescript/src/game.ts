@@ -26,10 +26,8 @@ export class Game {
         this.console.log(this.board.displayBeginTurn());
         this.console.log(this.board.displayRollPlayerMessage(roll));
 
-        this.board.checkPenaltyBox(roll);
-
-        const message = this.board.displayPenaltyBoxMessage();
-        if (message) {
+        if (this.board.checkPenaltyBox(roll)) {
+            const message = this.board.displayPenaltyBoxMessage();
             console.log(message)
         }
         this.board.movePlayer(roll);

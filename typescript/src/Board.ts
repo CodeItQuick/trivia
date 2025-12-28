@@ -43,11 +43,14 @@ export class Board {
         return playerName + "'s new location is " + this.players[this.currentPlayer].place;
     }
 
-    public checkPenaltyBox(roll: number) {
+    public checkPenaltyBox(roll: number): boolean {
         if (this.players[this.currentPlayer].isInPenaltyBox()) {
             const penaltyRoll = roll % 2 === 1;
             this.players[this.currentPlayer].penaltyBox(penaltyRoll);
+            return true;
         }
+
+        return false;
     }
 
     public displayPenaltyBoxMessage() {
