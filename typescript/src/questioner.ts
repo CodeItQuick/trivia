@@ -1,5 +1,6 @@
 ﻿import {Question} from "./question";
 
+// entity, has behaviour
 export class Questioner {
     private pop: Array<Question> = new Array<Question>()
     private science: Array<Question> = new Array<Question>()
@@ -7,14 +8,12 @@ export class Questioner {
     private rock: Array<Question> = new Array<Question>()
 
     constructor() {
-
         for (let i = 0; i < 50; i++) {
             this.pop.push(new Question("Pop Question " + i));
             this.science.push(new Question("Science Question " + i));
             this.sports.push(new Question("Sports Question " + i));
             this.rock.push(new Question("Rock Question " + i));
         }
-
     }
 
     public question(playerBoardPosition: number): string | undefined {

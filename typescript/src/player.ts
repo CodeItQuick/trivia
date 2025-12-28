@@ -1,4 +1,6 @@
-﻿export class Player {
+﻿
+// entity, there are if statements in here, but should probably be a value type
+export class Player {
     private _name: string;
     private purse: number = 0;
     private inPenaltyBox: boolean = false;
@@ -8,13 +10,8 @@
         this._name = name;
     }
 
-    public attemptGetOutOfPenaltyBox(roll: number) {
-        if (roll % 2 == 0) {
-            this.isGettingOutOfPenaltyBox = false;
-            return this.isGettingOutOfPenaltyBox;
-        }
-
-        this.isGettingOutOfPenaltyBox = true;
+    public attemptGetOutOfPenaltyBox(gettingOut: boolean) {
+        this.isGettingOutOfPenaltyBox = gettingOut;
         return this.isGettingOutOfPenaltyBox;
     }
 

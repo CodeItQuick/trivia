@@ -1,5 +1,6 @@
 ﻿import {Player} from "./player";
 
+// entity, has probably too much behaviour
 export class Board {
     private players: Array<Player> = new Array<Player>();
     private places: Array<number> = [];
@@ -46,7 +47,7 @@ export class Board {
 
     public displayPenaltyBoxMessage(roll: number) {
         if (this.players[this.currentPlayer].isInPenaltyBox()) {
-            let currentlyInPenalty = this.players[this.currentPlayer].attemptGetOutOfPenaltyBox(roll);
+            let currentlyInPenalty = this.players[this.currentPlayer].attemptGetOutOfPenaltyBox(roll % 2 === 1);
             return currentlyInPenalty === false ? this.players[this.currentPlayer].name() + " is not getting out of the penalty box" :
                 this.players[this.currentPlayer].name() + " is getting out of the penalty box";
         }

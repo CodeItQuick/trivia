@@ -1,4 +1,5 @@
-﻿export class Question {
+﻿// value type
+export class Question {
     private _message: string;
 
     constructor(message: string) {
