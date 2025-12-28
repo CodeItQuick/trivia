@@ -9,7 +9,7 @@ export class GameRunner {
         game.add("Pat");
         game.add("Sue");
 
-        let winner;
+        let winner: boolean = false;
         do {
             // checking to determine if they should or should not be removed from penalty box, more than just a bool check
             if (!game.checkPenaltyBox(Math.floor(Math.random() * 10))) {
