@@ -31,23 +31,27 @@ describe('The test environment', () => {
         expect(consoleWrapper.getMessages()[1]).to.be.eq("They are player number 1");
     });
 
-    for (const rollNumber of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]) {
+    for (const rollNumber of [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]) {
         const categories = ["Pop", "Science", "Sports", "Rock"]
         it(`when one player game rolled a ${rollNumber} should return new location is ${rollNumber} with ${categories[rollNumber % 4]} Question`, () => {
             const consoleWrapper = new ConsoleWrapper();
             const game = new Game(consoleWrapper);
             game.add("Chet")
-
-            game.roll(rollNumber);
+            game.checkPenaltyBox(rollNumber);
             game.askQuestion()
+            game.wasCorrectlyAnswered();
+
+            game.movePlayer(rollNumber);
 
             expect(consoleWrapper.getMessages()[0]).to.be.eq("Chet was added");
             expect(consoleWrapper.getMessages()[1]).to.be.eq("They are player number 1");
             expect(consoleWrapper.getMessages()[2]).to.be.eq("Chet is the current player");
-            expect(consoleWrapper.getMessages()[3]).to.be.eq(`They have rolled a ${rollNumber}`);
-            expect(consoleWrapper.getMessages()[4]).to.be.eq(`Chet's new location is ${rollNumber}`);
-            expect(consoleWrapper.getMessages()[5]).to.be.eq(`The category is ${categories[rollNumber % 4]}`);
-            expect(consoleWrapper.getMessages()[6]).to.be.eq(`${categories[rollNumber % 4]} Question 0`);
+            expect(consoleWrapper.getMessages()[3]).to.be.eq(`The category is Pop`);
+            expect(consoleWrapper.getMessages()[4]).to.be.eq(`Pop Question 0`);
+            expect(consoleWrapper.getMessages()[5]).to.be.eq(`Answer was correct!!!!`);
+            expect(consoleWrapper.getMessages()[6]).to.be.eq(`Chet now has 1 Gold Coins.`);
+            expect(consoleWrapper.getMessages()[7]).to.be.eq(`They have rolled a ${rollNumber}`);
+            expect(consoleWrapper.getMessages()[8]).to.be.eq(`Chet's new location is ${rollNumber}`);
         });
     }
 
@@ -57,12 +61,12 @@ describe('The test environment', () => {
             const game = new Game(consoleWrapper);
             game.add("Chet")
             game.add("Pat")
-            game.roll(rollNumber);
+            game.checkPenaltyBox(rollNumber);
             game.askQuestion()
             game.wasCorrectlyAnswered()
             game.rotatePlayer()
 
-            game.roll(rollNumber);
+            game.checkPenaltyBox(rollNumber);
             game.askQuestion()
             game.wasCorrectlyAnswered()
             game.rotatePlayer()
@@ -81,7 +85,7 @@ describe('The test environment', () => {
         const consoleWrapper = new ConsoleWrapper();
         const game = new Game(consoleWrapper);
         game.add("Chet")
-        game.roll(7);
+        game.checkPenaltyBox(7);
         game.askQuestion()
         game.wrongAnswer();
         const winner = game.currentPlayerWon()
@@ -99,11 +103,11 @@ describe('The test environment', () => {
         const game = new Game(consoleWrapper);
         game.add("Chet")
         game.add("Pat")
-        game.roll(7);
+        game.checkPenaltyBox(7);
         game.askQuestion();
         game.wrongAnswer();
         game.rotatePlayer();
-        game.roll(7);
+        game.checkPenaltyBox(7);
         game.askQuestion();
         game.wrongAnswer();
 
@@ -118,7 +122,7 @@ describe('The test environment', () => {
         const consoleWrapper = new ConsoleWrapper();
         const game = new Game(consoleWrapper);
         game.add("Chet")
-        game.roll(7);
+        game.checkPenaltyBox(7);
         game.askQuestion();
 
         game.wasCorrectlyAnswered();
@@ -149,37 +153,37 @@ describe('The test environment', () => {
         const game = new Game(consoleWrapper);
         game.add("Chet")
         game.add("Pat")
-        game.roll(7);
+        game.checkPenaltyBox(7);
         game.wasCorrectlyAnswered();
         game.rotatePlayer();
-        game.roll(7);
+        game.checkPenaltyBox(7);
         game.wasCorrectlyAnswered();
         game.rotatePlayer();
-        game.roll(7);
+        game.checkPenaltyBox(7);
         game.wasCorrectlyAnswered();
         game.rotatePlayer();
-        game.roll(7);
+        game.checkPenaltyBox(7);
         game.wasCorrectlyAnswered();
         game.rotatePlayer();
-        game.roll(7);
+        game.checkPenaltyBox(7);
         game.wasCorrectlyAnswered();
         game.rotatePlayer();
-        game.roll(7);
+        game.checkPenaltyBox(7);
         game.wasCorrectlyAnswered();
         game.rotatePlayer();
-        game.roll(7);
+        game.checkPenaltyBox(7);
         game.wasCorrectlyAnswered();
         game.rotatePlayer();
-        game.roll(7);
+        game.checkPenaltyBox(7);
         game.wasCorrectlyAnswered();
         game.rotatePlayer();
-        game.roll(7);
+        game.checkPenaltyBox(7);
         game.wasCorrectlyAnswered();
         game.rotatePlayer();
-        game.roll(7);
+        game.checkPenaltyBox(7);
         game.wasCorrectlyAnswered();
         game.rotatePlayer();
-        game.roll(7);
+        game.checkPenaltyBox(7);
         game.wasCorrectlyAnswered();
         game.rotatePlayer();
 

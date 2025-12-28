@@ -8,7 +8,7 @@ export class Questioner {
     private rock: Array<Question> = new Array<Question>()
 
     constructor() {
-        for (let i = 0; i < 50; i++) {
+        for (let i = 0; i < 500; i++) {
             this.pop.push(new Question("Pop Question " + i));
             this.science.push(new Question("Science Question " + i));
             this.sports.push(new Question("Sports Question " + i));

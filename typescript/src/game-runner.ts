@@ -11,12 +11,16 @@ export class GameRunner {
 
         let winner;
         do {
-            game.roll(Math.floor(Math.random() * 6) + 1);
-            game.askQuestion();
-            if (!game.isCurrentPlayerFree(Math.floor(Math.random() * 10))) {
-                game.wrongAnswer();
-            } else {
-                game.wasCorrectlyAnswered();
+            // checking to determine if they should or should not be removed from penalty box, more than just a bool check
+            if (!game.checkPenaltyBox(Math.floor(Math.random() * 10))) {
+                // asking the question, and then also determining if they answered correctly or not
+                // also violates SRP
+                if (game.askQuestion()) {
+                    game.wasCorrectlyAnswered()
+                    game.movePlayer(Math.floor(Math.random() * 10))
+                } else {
+                    game.wrongAnswer();
+                }
             }
             winner = game.currentPlayerWon();
             game.rotatePlayer()

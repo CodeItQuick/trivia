@@ -22,28 +22,35 @@ export class Game {
 
         return true;
     }
-    public roll(roll: number) {
+    public checkPenaltyBox(roll: number) {
         this.console.log(this.board.displayBeginTurn());
-        this.console.log(this.board.displayRollPlayerMessage(roll));
 
         if (this.board.checkPenaltyBox(roll)) {
-            const message = this.board.displayPenaltyBoxMessage();
-            console.log(message)
+            console.log(this.board.displayPenaltyBoxMessage());
+
+            return true;
         }
+
+        return false;
+    }
+
+    public movePlayer(roll: number): void {
+        this.console.log(this.board.displayRollPlayerMessage(roll));
         this.board.movePlayer(roll);
 
         this.console.log(this.board.displayPlayerLocation());
     }
-    public askQuestion(): void {
-        this.console.log(this.questioner.displayCategory(this.board.currentPlayerLocation()));
-        this.console.log(this.questioner.displayQuestion(this.board.currentPlayerLocation()));
+
+    public askQuestion(): boolean {
+        const playerBoardPosition = this.board.currentPlayerLocation();
+        this.console.log(this.questioner.displayCategory(playerBoardPosition));
+        this.console.log(this.questioner.displayQuestion(playerBoardPosition));
+
+        return Math.floor(Math.random() * 10) === 7; // has to be moved
     }
     public wrongAnswer(): void {
         this.console.log('Question was incorrectly answered');
         this.console.log(this.board.displayPutPlayerInBox());
-    }
-    public isCurrentPlayerFree(roll: number): boolean {
-        return this.board.isCurrentPlayerFree(roll);
     }
     public wasCorrectlyAnswered(): void {
         this.console.log("Answer was correct!!!!");

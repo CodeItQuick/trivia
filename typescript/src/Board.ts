@@ -45,21 +45,20 @@ export class Board {
 
     public checkPenaltyBox(roll: number): boolean {
         if (this.players[this.currentPlayer].isInPenaltyBox()) {
-            const penaltyRoll = roll % 2 === 1;
-            this.players[this.currentPlayer].penaltyBox(penaltyRoll);
-            return true;
+            const exitPenaltyBox = roll % 2 === 1;
+            this.players[this.currentPlayer].penaltyBox(exitPenaltyBox);
+
+            return exitPenaltyBox;
         }
 
         return false;
     }
 
     public displayPenaltyBoxMessage() {
-        if (this.players[this.currentPlayer].isInPenaltyBox()) {
-            const playerName = this.players[this.currentPlayer].name();
-            return this.players[this.currentPlayer].isInPenaltyBox() ?
-                playerName + " is not getting out of the penalty box" :
-                playerName + " is getting out of the penalty box";
-        }
+        const playerName = this.players[this.currentPlayer].name();
+        return this.players[this.currentPlayer].isInPenaltyBox() ?
+            playerName + " is not getting out of the penalty box" :
+            playerName + " is getting out of the penalty box";
     }
 
     public displayPutPlayerInBox() {
@@ -84,5 +83,9 @@ export class Board {
 
     public displayRollPlayerMessage(roll: number) {
         return "They have rolled a " + roll;
+    }
+
+    isInPenaltyBox() {
+        return this.players[this.currentPlayer].isInPenaltyBox();
     }
 }
