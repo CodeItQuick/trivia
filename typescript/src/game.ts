@@ -88,8 +88,9 @@ export class Game {
         return true;
     }
     public roll(roll: number) {
-        this.console.log(this.board.currentPlayerName() + " is the current player");
-        this.console.log("They have rolled a " + roll);
+        const [currentPlayerMessage, currentPlayerRollMessage] = this.board.rollPlayer(roll);
+        this.console.log(currentPlayerMessage);
+        this.console.log(currentPlayerRollMessage);
 
         const message = this.board.displayPenaltyBoxMessage(roll);
         if (message) {

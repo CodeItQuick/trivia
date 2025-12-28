@@ -47,10 +47,6 @@ export class Board {
         return this.players[this.currentPlayer].name();
     }
 
-    public currentPlayerIdx(): number {
-        return this.currentPlayer;
-    }
-
     putPlayerInBox() {
         this.players[this.currentPlayer].placeInBox();
         return this.players[this.currentPlayer].name() + " was sent to the penalty box";
@@ -69,5 +65,9 @@ export class Board {
 
     hasPlayerWon() {
         return this.players[this.currentPlayer].playerWon();
+    }
+
+    rollPlayer(roll: number) {
+        return [this.players[this.currentPlayer].name() + " is the current player", "They have rolled a " + roll];
     }
 }
