@@ -1,18 +1,11 @@
-﻿
-// entity, there are if statements in here, but should probably be a value type
+﻿// entity, too much behaviour, some of it is essential (eg: are they in or out of penalty box)
 export class Player {
     private _name: string;
     private purse: number = 0;
     private inPenaltyBox: boolean = false;
-    private isGettingOutOfPenaltyBox: boolean = false;
 
     constructor(name: string) {
         this._name = name;
-    }
-
-    public attemptGetOutOfPenaltyBox(gettingOut: boolean) {
-        this.isGettingOutOfPenaltyBox = gettingOut;
-        return this.isGettingOutOfPenaltyBox;
     }
 
     isInPenaltyBox() {
@@ -27,15 +20,15 @@ export class Player {
         this.inPenaltyBox = true;
     }
 
-    inPenalty() {
-        return this.inPenaltyBox && !this.isGettingOutOfPenaltyBox;
-    }
-
     currentCoins() {
         return ++this.purse;
     }
 
     playerWon() {
         return this.purse === 6;
+    }
+
+    penaltyBox(penaltyRollResult: boolean) {
+        this.inPenaltyBox = penaltyRollResult;
     }
 }

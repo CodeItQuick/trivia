@@ -29,10 +29,10 @@ export class Board {
         if (skipTurn) {
             return false;
         }
-        return !this.players[this.currentPlayer].inPenalty();
+        return !this.players[this.currentPlayer].isInPenaltyBox();
     }
 
-    hasPlayerWon() {
+    public hasPlayerWon() {
         return this.players[this.currentPlayer].playerWon();
     }
 
@@ -47,8 +47,9 @@ export class Board {
 
     public displayPenaltyBoxMessage(roll: number) {
         if (this.players[this.currentPlayer].isInPenaltyBox()) {
-            let currentlyInPenalty = this.players[this.currentPlayer].attemptGetOutOfPenaltyBox(roll % 2 === 1);
-            return currentlyInPenalty === false ? this.players[this.currentPlayer].name() + " is not getting out of the penalty box" :
+            const penaltyRoll = roll % 2 === 1;
+            this.players[this.currentPlayer].penaltyBox(penaltyRoll);
+            return this.players[this.currentPlayer].isInPenaltyBox() ? this.players[this.currentPlayer].name() + " is not getting out of the penalty box" :
                 this.players[this.currentPlayer].name() + " is getting out of the penalty box";
         }
     }
