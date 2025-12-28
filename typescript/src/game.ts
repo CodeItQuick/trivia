@@ -36,15 +36,38 @@ export class Board {
     }
 }
 
+export class Player {
+    private _name: string;
+    private purse: number = 0;
+    private inPenaltyBox: boolean = false;
+    private isGettingOutOfPenaltyBox: boolean = false;
+
+    constructor(name: string) {
+        this._name = name;
+    }
+
+    public attemptGetOutOfPenaltyBox(roll: number) {
+        if (roll % 2 == 0) {
+            this.isGettingOutOfPenaltyBox = false;
+            return this.isGettingOutOfPenaltyBox;
+        }
+
+        this.isGettingOutOfPenaltyBox = true;
+        return this.isGettingOutOfPenaltyBox;
+    }
+
+    isInPenaltyBox() {
+        return this.inPenaltyBox;
+    }
+}
+
 export class Game {
 
     // board
     private board: Board = new Board();
-    private players: Array<string> = [];
-    private places: Array<number> = [];
-    private currentPlayer: number = 0;
 
     // player
+    private players: Array<Player> = new Array<Player>();
     private purses: Array<number> = [];
     private inPenaltyBox: Array<boolean> = [];
     private isGettingOutOfPenaltyBox: boolean = false;
@@ -70,7 +93,7 @@ export class Game {
     }
     public add(name: string): boolean {
         this.board.addPlayer(name);
-        this.players.push(name);
+        this.players.push(new Player(name));
         this.purses[this.players.length - 1] = 0;
         this.inPenaltyBox[this.players.length - 1] = false;
 
@@ -83,16 +106,11 @@ export class Game {
         this.console.log(this.board.currentPlayerName() + " is the current player");
         this.console.log("They have rolled a " + roll);
 
-        if (this.inPenaltyBox[this.board.currentPlayerIdx()]) {
-            if (roll % 2 == 0) {
-                this.console.log(this.board.currentPlayerName() + " is not getting out of the penalty box");
-                this.isGettingOutOfPenaltyBox = false;
-                return;
-            }
-
-            this.isGettingOutOfPenaltyBox = true;
-
-            this.console.log(this.board.currentPlayerName() + " is getting out of the penalty box");
+        if (this.players[this.board.currentPlayerIdx()].isInPenaltyBox()) {
+            const isGettingOut = this.players[this.board.currentPlayerIdx()].attemptGetOutOfPenaltyBox(roll);
+            let message = isGettingOut === false ? this.board.currentPlayerName() + " is not getting out of the penalty box" :
+                this.board.currentPlayerName() + " is getting out of the penalty box";
+            this.console.log(message);
         }
 
         const currentPlayerPlace = this.board.movePlayer(roll);
