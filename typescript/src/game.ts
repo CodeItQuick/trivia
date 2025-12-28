@@ -28,6 +28,10 @@ export class Player {
     name() {
         return this._name;
     }
+
+    placeInBox() {
+        this.inPenaltyBox = true;
+    }
 }
 
 export class Game {
@@ -104,9 +108,10 @@ export class Game {
         }
     }
     public wrongAnswer(): void {
-        this.inPenaltyBox[this.board.currentPlayerIdx()] = true;
+        const message = this.board.putPlayerInBox();
+
         this.console.log('Question was incorrectly answered');
-        this.console.log(this.board.currentPlayerName() + " was sent to the penalty box");
+        this.console.log(message);
     }
 
     public wasCorrectlyAnswered(): void {

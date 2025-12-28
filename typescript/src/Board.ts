@@ -50,4 +50,9 @@ export class Board {
     public currentPlayerIdx(): number {
         return this.currentPlayer;
     }
+
+    putPlayerInBox() {
+        this.players[this.currentPlayer].placeInBox();
+        return this.players[this.currentPlayer].name() + " was sent to the penalty box";
+    }
 }
