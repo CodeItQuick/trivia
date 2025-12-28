@@ -78,8 +78,8 @@ export class Game {
         this.console.log(message);
     }
 
-    public isInPenaltyBox(): boolean {
-        return this.board.isCurrentPlayerInBox();
+    public isCurrentPlayerFree(roll: number): boolean {
+        return this.board.isCurrentPlayerFree(roll);
     }
 
     public wasCorrectlyAnswered(): void {

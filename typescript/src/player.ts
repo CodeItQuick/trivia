@@ -34,7 +34,7 @@
         return this.isGettingOutOfPenaltyBox;
     }
 
-    PenaltyBeingServed() {
+    inPenalty() {
         return this.inPenaltyBox && !this.isGettingOut;
     }
 

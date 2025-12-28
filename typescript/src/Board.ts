@@ -52,8 +52,12 @@ export class Board {
         return this.players[this.currentPlayer].name() + " was sent to the penalty box";
     }
 
-    isCurrentPlayerInBox() {
-        return this.players[this.currentPlayer].PenaltyBeingServed();
+    isCurrentPlayerFree(roll: number) {
+        let skipTurn = roll === 7;
+        if (skipTurn) {
+            return false;
+        }
+        return !this.players[this.currentPlayer].inPenalty();
     }
 
     rewardPlayer() {
