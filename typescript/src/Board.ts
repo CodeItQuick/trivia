@@ -42,32 +42,40 @@ export class Board {
             this.places[this.currentPlayer] = this.places[this.currentPlayer] - 12;
         }
 
-        return this.players[this.currentPlayer].name() + "'s new location is " + this.places[this.currentPlayer];
+        const playerName = this.players[this.currentPlayer].name();
+        return playerName + "'s new location is " + this.places[this.currentPlayer];
     }
 
     public displayPenaltyBoxMessage(roll: number) {
         if (this.players[this.currentPlayer].isInPenaltyBox()) {
             const penaltyRoll = roll % 2 === 1;
             this.players[this.currentPlayer].penaltyBox(penaltyRoll);
-            return this.players[this.currentPlayer].isInPenaltyBox() ? this.players[this.currentPlayer].name() + " is not getting out of the penalty box" :
-                this.players[this.currentPlayer].name() + " is getting out of the penalty box";
+
+            const playerName = this.players[this.currentPlayer].name();
+            return this.players[this.currentPlayer].isInPenaltyBox() ?
+                playerName + " is not getting out of the penalty box" :
+                playerName + " is getting out of the penalty box";
         }
     }
 
     public displayPutPlayerInBox() {
         this.players[this.currentPlayer].placeInBox();
-        return this.players[this.currentPlayer].name() + " was sent to the penalty box";
+        const playerName = this.players[this.currentPlayer].name();
+
+        return playerName + " was sent to the penalty box";
     }
 
     public displayRewardPlayer() {
+        const playerName = this.players[this.currentPlayer].name();
         const coins = this.players[this.currentPlayer].currentCoins();
 
-        return this.players[this.currentPlayer].name() + " now has " +
-            coins + " Gold Coins."
+        return playerName + " now has " + coins + " Gold Coins."
     }
 
     public displayBeginTurn() {
-        return this.players[this.currentPlayer].name() + " is the current player";
+        const playerName = this.players[this.currentPlayer].name();
+
+        return playerName + " is the current player";
     }
 
     public displayRollPlayerMessage(roll: number) {
