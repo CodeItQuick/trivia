@@ -13,7 +13,7 @@ export class GameRunner {
         do {
             game.roll(Math.floor(Math.random() * 6) + 1);
             game.askQuestion();
-            if (Math.floor(Math.random() * 10) === 7) {
+            if (!game.isInPenaltyBox() && Math.floor(Math.random() * 10) === 7) {
                 game.wrongAnswer();
             } else {
                 game.wasCorrectlyAnswered();

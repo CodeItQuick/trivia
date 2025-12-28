@@ -57,7 +57,6 @@ export class Game {
 
     // player
     private players: Array<Player> = new Array<Player>();
-    private purses: Array<number> = [];
 
     // questioner
     private popQuestions: Array<string> = [];
@@ -127,11 +126,11 @@ export class Game {
         this.console.log(message);
     }
 
-    public wasCorrectlyAnswered(): void {
-        if (this.board.isCurrentPlayerInBox()) {
-            return;
-        }
+    public isInPenaltyBox(): boolean {
+        return this.board.isCurrentPlayerInBox();
+    }
 
+    public wasCorrectlyAnswered(): void {
         const message = this.board.rewardPlayer();
 
         this.console.log("Answer was correct!!!!");
