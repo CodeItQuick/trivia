@@ -1,4 +1,4 @@
-﻿import {Player} from "./game";
+﻿import {Player} from "./player";
 
 export class Board {
     private players: Array<Player> = new Array<Player>();
