@@ -1,7 +1,7 @@
 import {ConsoleWrapper} from "./consoleWrapper";
 import {Board} from "./Board";
 import {Player} from "./player";
-import {QuestionCards} from "./questionCards";
+import {Questioner} from "./questioner";
 
 export class Game {
 
@@ -10,7 +10,7 @@ export class Game {
     // player
     private players: Array<Player> = new Array<Player>();
     // questionCard
-    private questionCard: QuestionCards = new QuestionCards();
+    private questionCard: Questioner = new Questioner();
 
     private console: ConsoleWrapper | typeof console;
 

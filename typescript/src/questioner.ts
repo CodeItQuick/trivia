@@ -1,34 +1,34 @@
 ﻿import {Question} from "./question";
 
-export class QuestionCards {
-    private popQuestion: Array<Question> = new Array<Question>()
-    private scienceQuestion: Array<Question> = new Array<Question>()
-    private sportsQuestion: Array<Question> = new Array<Question>()
-    private rockQuestion: Array<Question> = new Array<Question>()
+export class Questioner {
+    private pop: Array<Question> = new Array<Question>()
+    private science: Array<Question> = new Array<Question>()
+    private sports: Array<Question> = new Array<Question>()
+    private rock: Array<Question> = new Array<Question>()
 
     constructor() {
 
         for (let i = 0; i < 50; i++) {
-            this.popQuestion.push(new Question("Pop Question " + i));
-            this.scienceQuestion.push(new Question("Science Question " + i));
-            this.sportsQuestion.push(new Question("Sports Question " + i));
-            this.rockQuestion.push(new Question("Rock Question " + i));
+            this.pop.push(new Question("Pop Question " + i));
+            this.science.push(new Question("Science Question " + i));
+            this.sports.push(new Question("Sports Question " + i));
+            this.rock.push(new Question("Rock Question " + i));
         }
 
     }
 
     public question(playerBoardPosition: number): string | undefined {
         if (playerBoardPosition % 4 === 0) {
-            return this.popQuestion.shift()?.message();
+            return this.pop.shift()?.message();
         }
         if (playerBoardPosition % 4 === 1) {
-            return this.scienceQuestion.shift()?.message();
+            return this.science.shift()?.message();
         }
         if (playerBoardPosition % 4 === 2) {
-            return this.sportsQuestion.shift()?.message();
+            return this.sports.shift()?.message();
         }
         if (playerBoardPosition % 4 === 3) {
-            return this.rockQuestion.shift()?.message();
+            return this.rock.shift()?.message();
         }
     }
 
