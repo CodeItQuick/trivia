@@ -34,7 +34,7 @@ export class Board {
             return this.buildPenaltyMessage(currentlyInPenalty);
         }
     }
-    public buildPenaltyMessage(isGettingOut) {
+    public buildPenaltyMessage(isGettingOut: boolean) {
         return isGettingOut === false ? this.currentPlayerName() + " is not getting out of the penalty box" :
             this.currentPlayerName() + " is getting out of the penalty box";
     }

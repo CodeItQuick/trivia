@@ -38,7 +38,7 @@ export class Player {
     }
 
     PenaltyBeingServed() {
-        return this.isInPenaltyBox && !this.isGettingOut;
+        return this.inPenaltyBox && !this.isGettingOut;
     }
 
     currentCoins() {
