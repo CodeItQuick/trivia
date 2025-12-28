@@ -39,9 +39,8 @@ export class Game {
         return true;
     }
     public roll(roll: number) {
-        const [currentPlayerMessage, currentPlayerRollMessage] = this.board.rollPlayer(roll);
-        this.console.log(currentPlayerMessage);
-        this.console.log(currentPlayerRollMessage);
+        this.console.log(this.board.beginTurn());
+        this.console.log(this.board.rollPlayerMessage(roll));
 
         const message = this.board.displayPenaltyBoxMessage(roll);
         if (message) {

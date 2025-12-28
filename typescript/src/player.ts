@@ -30,12 +30,8 @@
         this.inPenaltyBox = true;
     }
 
-    isGettingOut() {
-        return this.isGettingOutOfPenaltyBox;
-    }
-
     inPenalty() {
-        return this.inPenaltyBox && !this.isGettingOut;
+        return this.inPenaltyBox && !this.isGettingOutOfPenaltyBox;
     }
 
     currentCoins() {

@@ -31,20 +31,12 @@ export class Board {
     public displayPenaltyBoxMessage(roll: number) {
         if (this.players[this.currentPlayer].isInPenaltyBox()) {
             let currentlyInPenalty = this.players[this.currentPlayer].attemptGetOutOfPenaltyBox(roll);
-            return this.buildPenaltyMessage(currentlyInPenalty);
+            return currentlyInPenalty === false ? this.players[this.currentPlayer].name() + " is not getting out of the penalty box" :
+                this.players[this.currentPlayer].name() + " is getting out of the penalty box";
         }
     }
-    public buildPenaltyMessage(isGettingOut: boolean) {
-        return isGettingOut === false ? this.currentPlayerName() + " is not getting out of the penalty box" :
-            this.currentPlayerName() + " is getting out of the penalty box";
-    }
-
     public currentPlayerLocation(): number {
         return this.places[this.currentPlayer];
-    }
-
-    public currentPlayerName(): string {
-        return this.players[this.currentPlayer].name();
     }
 
     putPlayerInBox() {
@@ -71,7 +63,11 @@ export class Board {
         return this.players[this.currentPlayer].playerWon();
     }
 
-    rollPlayer(roll: number) {
-        return [this.players[this.currentPlayer].name() + " is the current player", "They have rolled a " + roll];
+    beginTurn() {
+        return this.players[this.currentPlayer].name() + " is the current player";
+    }
+
+    rollPlayerMessage(roll: number) {
+        return "They have rolled a " + roll;
     }
 }
