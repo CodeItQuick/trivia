@@ -60,12 +60,12 @@ describe('The test environment', () => {
             game.roll(rollNumber);
             game.askQuestion()
             game.wasCorrectlyAnswered()
-            game.finishTurn()
+            game.rotatePlayer()
 
             game.roll(rollNumber);
             game.askQuestion()
             game.wasCorrectlyAnswered()
-            game.finishTurn()
+            game.rotatePlayer()
 
             const categories = ["Rock", "Science", "Sports", "Rock", "Pop", "Science", "Sports", "Rock", "Pop", "Science", "Sports", "Rock", "Pop"]
             expect(consoleWrapper.getMessages()[12]).to.be.eq(`They have rolled a ${rollNumber}`);
@@ -84,8 +84,9 @@ describe('The test environment', () => {
         game.roll(7);
         game.askQuestion()
         game.wrongAnswer();
+        const winner = game.currentPlayerWon()
 
-        const winner = game.finishTurn()
+        game.rotatePlayer();
 
         expect(consoleWrapper.getMessages()[7]).to.be.eq("Question was incorrectly answered");
         expect(consoleWrapper.getMessages()[8]).to.be.eq("Chet was sent to the penalty box");
@@ -101,12 +102,12 @@ describe('The test environment', () => {
         game.roll(7);
         game.askQuestion();
         game.wrongAnswer();
-        game.finishTurn();
+        game.rotatePlayer();
         game.roll(7);
         game.askQuestion();
         game.wrongAnswer();
 
-        const winner = game.finishTurn();
+        const winner = game.currentPlayerWon();
 
         expect(consoleWrapper.getMessages()[16]).to.be.eq("Question was incorrectly answered");
         expect(consoleWrapper.getMessages()[17]).to.be.eq("Pat was sent to the penalty box");
@@ -121,7 +122,7 @@ describe('The test environment', () => {
         game.askQuestion();
 
         game.wasCorrectlyAnswered();
-        const winner = game.finishTurn()
+        const winner = game.currentPlayerWon()
 
         expect(consoleWrapper.getMessages()[7]).to.be.eq("Answer was correct!!!!");
         expect(consoleWrapper.getMessages()[8]).to.be.eq("Chet now has 1 Gold Coins.");
@@ -133,10 +134,10 @@ describe('The test environment', () => {
         game.add("Chet")
         game.add("Pat")
         game.wrongAnswer();
-        game.finishTurn();
+        game.rotatePlayer();
 
         game.wasCorrectlyAnswered();
-        const winner = game.finishTurn()
+        const winner = game.currentPlayerWon()
 
         expect(consoleWrapper.getMessages()[6]).to.be.eq("Answer was correct!!!!");
         expect(consoleWrapper.getMessages()[7]).to.be.eq("Pat now has 1 Gold Coins.");
@@ -150,40 +151,40 @@ describe('The test environment', () => {
         game.add("Pat")
         game.roll(7);
         game.wasCorrectlyAnswered();
-        game.finishTurn();
+        game.rotatePlayer();
         game.roll(7);
         game.wasCorrectlyAnswered();
-        game.finishTurn();
+        game.rotatePlayer();
         game.roll(7);
         game.wasCorrectlyAnswered();
-        game.finishTurn();
+        game.rotatePlayer();
         game.roll(7);
         game.wasCorrectlyAnswered();
-        game.finishTurn();
+        game.rotatePlayer();
         game.roll(7);
         game.wasCorrectlyAnswered();
-        game.finishTurn();
+        game.rotatePlayer();
         game.roll(7);
         game.wasCorrectlyAnswered();
-        game.finishTurn();
+        game.rotatePlayer();
         game.roll(7);
         game.wasCorrectlyAnswered();
-        game.finishTurn();
+        game.rotatePlayer();
         game.roll(7);
         game.wasCorrectlyAnswered();
-        game.finishTurn();
+        game.rotatePlayer();
         game.roll(7);
         game.wasCorrectlyAnswered();
-        game.finishTurn();
+        game.rotatePlayer();
         game.roll(7);
         game.wasCorrectlyAnswered();
-        game.finishTurn();
+        game.rotatePlayer();
         game.roll(7);
         game.wasCorrectlyAnswered();
-        game.finishTurn();
+        game.rotatePlayer();
 
         game.wasCorrectlyAnswered();
-        const winner = game.finishTurn();
+        const winner = game.currentPlayerWon();
 
         expect(winner).to.eq(true);
     });

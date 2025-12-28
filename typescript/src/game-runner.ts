@@ -11,7 +11,6 @@ export class GameRunner {
 
         let winner;
         do {
-
             game.roll(Math.floor(Math.random() * 6) + 1);
             game.askQuestion();
             if (Math.floor(Math.random() * 10) === 7) {
@@ -19,8 +18,8 @@ export class GameRunner {
             } else {
                 game.wasCorrectlyAnswered();
             }
-            winner = game.finishTurn()
-        
+            winner = game.currentPlayerWon();
+            game.rotatePlayer()
         } while (!winner);
     }
 }
