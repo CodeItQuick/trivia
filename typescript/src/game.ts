@@ -80,9 +80,7 @@ export class Game {
             console.log(message)
         }
 
-        const currentPlayerPlace = this.board.movePlayer(roll);
-
-        this.console.log(this.board.currentPlayerName() + "'s new location is " + currentPlayerPlace);
+        this.console.log(this.board.displayPlayerLocation(roll));
 
     }
 

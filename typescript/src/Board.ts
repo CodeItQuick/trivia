@@ -12,13 +12,13 @@ export class Board {
         return this.players.length;
     }
 
-    public movePlayer(roll: number) {
+    public displayPlayerLocation(roll: number) {
         this.places[this.currentPlayer] = this.places[this.currentPlayer] + roll;
         if (this.places[this.currentPlayer] > 12) {
             this.places[this.currentPlayer] = this.places[this.currentPlayer] - 12;
         }
 
-        return this.places[this.currentPlayer];
+        return this.players[this.currentPlayer].name() + "'s new location is " + this.places[this.currentPlayer];
     }
 
     public rotatePlayer() {
