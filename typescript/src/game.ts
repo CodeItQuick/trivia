@@ -1,7 +1,7 @@
 import {ConsoleWrapper} from "./consoleWrapper";
 import {Board} from "./Board";
 import {Player} from "./player";
-import {Questioner} from "./questioner";
+import {QuestionCards} from "./questionCards";
 
 export class Game {
 
@@ -9,8 +9,8 @@ export class Game {
     private board: Board = new Board();
     // player
     private players: Array<Player> = new Array<Player>();
-    // questioner
-    private questioner: Questioner = new Questioner();
+    // questionCard
+    private questionCard: QuestionCards = new QuestionCards();
 
     private console: ConsoleWrapper | typeof console;
 
@@ -42,9 +42,10 @@ export class Game {
     }
 
     public askQuestion(): void {
-        this.console.log(this.questioner.category(this.board.currentPlayerLocation()));
-        this.console.log(this.questioner.question(this.board.currentPlayerLocation()));
+        this.console.log(this.questionCard.category(this.board.currentPlayerLocation()));
+        this.console.log(this.questionCard.question(this.board.currentPlayerLocation()));
     }
+
     public wrongAnswer(): void {
         const message = this.board.putPlayerInBox();
 

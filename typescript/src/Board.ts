@@ -12,13 +12,8 @@ export class Board {
         return this.players.length;
     }
 
-    public displayPlayerLocation(roll: number) {
-        this.places[this.currentPlayer] = this.places[this.currentPlayer] + roll;
-        if (this.places[this.currentPlayer] > 12) {
-            this.places[this.currentPlayer] = this.places[this.currentPlayer] - 12;
-        }
-
-        return this.players[this.currentPlayer].name() + "'s new location is " + this.places[this.currentPlayer];
+    public currentPlayerLocation(): number {
+        return this.places[this.currentPlayer];
     }
 
     public rotatePlayer() {
@@ -28,23 +23,7 @@ export class Board {
         }
     }
 
-    public displayPenaltyBoxMessage(roll: number) {
-        if (this.players[this.currentPlayer].isInPenaltyBox()) {
-            let currentlyInPenalty = this.players[this.currentPlayer].attemptGetOutOfPenaltyBox(roll);
-            return currentlyInPenalty === false ? this.players[this.currentPlayer].name() + " is not getting out of the penalty box" :
-                this.players[this.currentPlayer].name() + " is getting out of the penalty box";
-        }
-    }
-    public currentPlayerLocation(): number {
-        return this.places[this.currentPlayer];
-    }
-
-    putPlayerInBox() {
-        this.players[this.currentPlayer].placeInBox();
-        return this.players[this.currentPlayer].name() + " was sent to the penalty box";
-    }
-
-    isCurrentPlayerFree(roll: number) {
+    public isCurrentPlayerFree(roll: number) {
         let skipTurn = roll === 7;
         if (skipTurn) {
             return false;
@@ -52,15 +31,37 @@ export class Board {
         return !this.players[this.currentPlayer].inPenalty();
     }
 
+    hasPlayerWon() {
+        return this.players[this.currentPlayer].playerWon();
+    }
+
+    public displayPlayerLocation(roll: number) {
+        this.places[this.currentPlayer] = this.places[this.currentPlayer] + roll;
+        if (this.places[this.currentPlayer] > 12) {
+            this.places[this.currentPlayer] = this.places[this.currentPlayer] - 12;
+        }
+
+        return this.players[this.currentPlayer].name() + "'s new location is " + this.places[this.currentPlayer];
+    }
+
+    public displayPenaltyBoxMessage(roll: number) {
+        if (this.players[this.currentPlayer].isInPenaltyBox()) {
+            let currentlyInPenalty = this.players[this.currentPlayer].attemptGetOutOfPenaltyBox(roll);
+            return currentlyInPenalty === false ? this.players[this.currentPlayer].name() + " is not getting out of the penalty box" :
+                this.players[this.currentPlayer].name() + " is getting out of the penalty box";
+        }
+    }
+
+    putPlayerInBox() {
+        this.players[this.currentPlayer].placeInBox();
+        return this.players[this.currentPlayer].name() + " was sent to the penalty box";
+    }
+
     rewardPlayer() {
         const coins = this.players[this.currentPlayer].currentCoins();
 
         return this.players[this.currentPlayer].name() + " now has " +
             coins + " Gold Coins."
-    }
-
-    hasPlayerWon() {
-        return this.players[this.currentPlayer].playerWon();
     }
 
     beginTurn() {

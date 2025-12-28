@@ -1,6 +1,6 @@
 ﻿import {Question} from "./question";
 
-export class Questioner {
+export class QuestionCards {
     private popQuestion: Array<Question> = new Array<Question>()
     private scienceQuestion: Array<Question> = new Array<Question>()
     private sportsQuestion: Array<Question> = new Array<Question>()
