@@ -16,7 +16,7 @@ export class Questioner {
         }
     }
 
-    public question(playerBoardPosition: number): string | undefined {
+    public displayQuestion(playerBoardPosition: number): string | undefined {
         if (playerBoardPosition % 4 === 0) {
             return this.pop.shift()?.message();
         }
@@ -31,7 +31,7 @@ export class Questioner {
         }
     }
 
-    category(playerBoardPosition: number) {
+    displayCategory(playerBoardPosition: number) {
         if (playerBoardPosition % 4 === 0) {
             return "The category is Pop";
         }

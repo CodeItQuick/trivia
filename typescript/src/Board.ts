@@ -54,23 +54,23 @@ export class Board {
         }
     }
 
-    putPlayerInBox() {
+    public displayPutPlayerInBox() {
         this.players[this.currentPlayer].placeInBox();
         return this.players[this.currentPlayer].name() + " was sent to the penalty box";
     }
 
-    rewardPlayer() {
+    public displayRewardPlayer() {
         const coins = this.players[this.currentPlayer].currentCoins();
 
         return this.players[this.currentPlayer].name() + " now has " +
             coins + " Gold Coins."
     }
 
-    beginTurn() {
+    public displayBeginTurn() {
         return this.players[this.currentPlayer].name() + " is the current player";
     }
 
-    rollPlayerMessage(roll: number) {
+    public displayRollPlayerMessage(roll: number) {
         return "They have rolled a " + roll;
     }
 }
