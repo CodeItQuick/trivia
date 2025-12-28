@@ -24,6 +24,10 @@ export class Player {
     isInPenaltyBox() {
         return this.inPenaltyBox;
     }
+
+    name() {
+        return this._name;
+    }
 }
 
 export class Game {
@@ -71,7 +75,7 @@ export class Game {
         this.console.log(this.board.currentPlayerName() + " is the current player");
         this.console.log("They have rolled a " + roll);
 
-        const message = this.penaltyBoxBehaviour(roll);
+        const message = this.board.displayPenaltyBoxMessage(roll);
         if (message) {
             console.log(message)
         }
@@ -82,15 +86,8 @@ export class Game {
 
     }
 
-    public penaltyBoxBehaviour(roll: number) {
-        if (this.players[this.board.currentPlayerIdx()].isInPenaltyBox()) {
-            let currentlyInPenalty = this.players[this.board.currentPlayerIdx()].attemptGetOutOfPenaltyBox(roll);
-            return this.board.buildPenaltyMessage(currentlyInPenalty);
-        }
-    }
-
     public askQuestion(): void {
-        let playerBoardPosition = this.board.currentPlayerLocation();
+        const playerBoardPosition = this.board.currentPlayerLocation();
         if (playerBoardPosition % 4 === 0) {
             this.console.log("The category is Pop");
             this.console.log(this.popQuestions.shift());

@@ -1,10 +1,12 @@
-﻿export class Board {
-    private players: Array<string> = [];
+﻿import {Player} from "./game";
+
+export class Board {
+    private players: Array<Player> = new Array<Player>();
     private places: Array<number> = [];
     private currentPlayer: number = 0;
 
     public addPlayer(name: string): number {
-        this.players.push(name);
+        this.players.push(new Player(name))
         this.places[this.players.length - 1] = 0;
 
         return this.players.length;
@@ -26,6 +28,12 @@
         }
     }
 
+    public displayPenaltyBoxMessage(roll: number) {
+        if (this.players[this.currentPlayer].isInPenaltyBox()) {
+            let currentlyInPenalty = this.players[this.currentPlayer].attemptGetOutOfPenaltyBox(roll);
+            return this.buildPenaltyMessage(currentlyInPenalty);
+        }
+    }
     public buildPenaltyMessage(isGettingOut) {
         return isGettingOut === false ? this.currentPlayerName() + " is not getting out of the penalty box" :
             this.currentPlayerName() + " is getting out of the penalty box";
@@ -36,7 +44,7 @@
     }
 
     public currentPlayerName(): string {
-        return this.players[this.currentPlayer];
+        return this.players[this.currentPlayer].name();
     }
 
     public currentPlayerIdx(): number {
