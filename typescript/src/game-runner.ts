@@ -17,13 +17,18 @@ export class GameRunner {
                 // also violates SRP
                 if (game.askQuestion()) {
                     game.wasCorrectlyAnswered()
-                    game.movePlayer(Math.floor(Math.random() * 10))
+                    winner = game.currentPlayerWon();
+                    if (!winner) {
+                        game.movePlayer(Math.floor(Math.random() * 10))
+                    }
                 } else {
                     game.wrongAnswer();
                 }
             }
             winner = game.currentPlayerWon();
-            game.rotatePlayer()
+            if (!winner) {
+                game.rotatePlayer()
+            }
         } while (!winner);
     }
 }

@@ -26,7 +26,7 @@ export class Game {
         this.console.log(this.board.displayBeginTurn());
 
         if (this.board.checkPenaltyBox(roll)) {
-            console.log(this.board.displayPenaltyBoxMessage());
+            this.console.log(this.board.displayPenaltyBoxMessage());
 
             return true;
         }

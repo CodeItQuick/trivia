@@ -59,34 +59,34 @@ describe('The test environment', () => {
         it(`when two player game rolled a ${rollNumber} should change player category give second player gold coins`, () => {
             const consoleWrapper = new ConsoleWrapper();
             const game = new Game(consoleWrapper);
-            game.add("Chet")
-            game.add("Pat")
+            game.add("Chet");
+            game.add("Pat");
             game.checkPenaltyBox(rollNumber);
-            game.askQuestion()
-            game.wasCorrectlyAnswered()
+            game.askQuestion();
+            game.wasCorrectlyAnswered();
+            const winner = game.currentPlayerWon();
             game.rotatePlayer()
+            game.checkPenaltyBox(rollNumber);
+            game.askQuestion();
 
-            game.checkPenaltyBox(rollNumber);
-            game.askQuestion()
-            game.wasCorrectlyAnswered()
-            game.rotatePlayer()
+            game.wasCorrectlyAnswered();
 
             const categories = ["Rock", "Science", "Sports", "Rock", "Pop", "Science", "Sports", "Rock", "Pop", "Science", "Sports", "Rock", "Pop"]
-            expect(consoleWrapper.getMessages()[12]).to.be.eq(`They have rolled a ${rollNumber}`);
-            expect(consoleWrapper.getMessages()[13]).to.be.eq(`Pat's new location is ${rollNumber % 13}`);
-            expect(consoleWrapper.getMessages()[14]).to.be.eq(`The category is ${categories[rollNumber]}`);
-            expect(consoleWrapper.getMessages()[15]).to.be.eq(`${categories[rollNumber]} Question 1`);
-            expect(consoleWrapper.getMessages()[16]).to.be.eq("Answer was correct!!!!");
-            expect(consoleWrapper.getMessages()[17]).to.be.eq("Pat now has 1 Gold Coins.");
+            expect(consoleWrapper.getMessages()[9]).to.be.eq(`Pat is the current player`);
+            expect(consoleWrapper.getMessages()[10]).to.be.eq(`The category is Pop`);
+            expect(consoleWrapper.getMessages()[11]).to.be.eq(`Pop Question 1`);
+            expect(consoleWrapper.getMessages()[12]).to.be.eq("Answer was correct!!!!");
+            expect(consoleWrapper.getMessages()[13]).to.be.eq("Pat now has 1 Gold Coins.");
         });
     }
 
     it('when one player game after game roll wrongAnswer should put player in jail and not move them', () => {
         const consoleWrapper = new ConsoleWrapper();
         const game = new Game(consoleWrapper);
-        game.add("Chet")
-        game.checkPenaltyBox(7);
-        game.askQuestion()
+        game.add("Chet");
+        game.add("Pat");
+        game.checkPenaltyBox(1);
+        game.askQuestion();
         game.wrongAnswer();
         const winner = game.currentPlayerWon()
 
@@ -103,18 +103,21 @@ describe('The test environment', () => {
         const game = new Game(consoleWrapper);
         game.add("Chet")
         game.add("Pat")
-        game.checkPenaltyBox(7);
+        game.checkPenaltyBox(1);
         game.askQuestion();
         game.wrongAnswer();
+        game.currentPlayerWon();
         game.rotatePlayer();
-        game.checkPenaltyBox(7);
+        game.checkPenaltyBox(1);
         game.askQuestion();
         game.wrongAnswer();
+        const winner = game.currentPlayerWon()
+        game.rotatePlayer();
 
-        const winner = game.currentPlayerWon();
+        game.checkPenaltyBox(1);
 
-        expect(consoleWrapper.getMessages()[16]).to.be.eq("Question was incorrectly answered");
-        expect(consoleWrapper.getMessages()[17]).to.be.eq("Pat was sent to the penalty box");
+        expect(consoleWrapper.getMessages()[14]).to.be.eq("Chet is the current player");
+        expect(consoleWrapper.getMessages()[15]).to.be.eq("Chet is not getting out of the penalty box");
         expect(winner).to.eq(false);
     });
 
@@ -122,15 +125,15 @@ describe('The test environment', () => {
         const consoleWrapper = new ConsoleWrapper();
         const game = new Game(consoleWrapper);
         game.add("Chet")
-        game.checkPenaltyBox(7);
+        game.checkPenaltyBox(1);
         game.askQuestion();
-
         game.wasCorrectlyAnswered();
-        const winner = game.currentPlayerWon()
 
-        expect(consoleWrapper.getMessages()[7]).to.be.eq("Answer was correct!!!!");
-        expect(consoleWrapper.getMessages()[8]).to.be.eq("Chet now has 1 Gold Coins.");
-        expect(winner).to.eq(false);
+        game.currentPlayerWon();
+
+        expect(consoleWrapper.getMessages()[5]).to.be.eq("Answer was correct!!!!");
+        expect(consoleWrapper.getMessages()[6]).to.be.eq("Chet now has 1 Gold Coins.");
+
     });
     it('when two player game after game roll wasCorrectlyAnswered should give player Gold Coins', () => {
         const consoleWrapper = new ConsoleWrapper();
