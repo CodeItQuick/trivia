@@ -2,6 +2,7 @@
 export class Player {
     private _name: string;
     private purse: number = 0;
+    public place: number = 0;
     private inPenaltyBox: boolean = false;
 
     constructor(name: string) {
@@ -30,5 +31,12 @@ export class Player {
 
     penaltyBox(penaltyRollResult: boolean) {
         this.inPenaltyBox = penaltyRollResult;
+    }
+
+    movePlayer(roll: number) {
+        this.place = this.place + roll;
+        if (this.place > 12) {
+            this.place = this.place - 12;
+        }
     }
 }

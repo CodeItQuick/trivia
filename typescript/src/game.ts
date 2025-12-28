@@ -26,12 +26,15 @@ export class Game {
         this.console.log(this.board.displayBeginTurn());
         this.console.log(this.board.displayRollPlayerMessage(roll));
 
-        const message = this.board.displayPenaltyBoxMessage(roll);
+        this.board.checkPenaltyBox(roll);
+
+        const message = this.board.displayPenaltyBoxMessage();
         if (message) {
             console.log(message)
         }
+        this.board.movePlayer(roll);
 
-        this.console.log(this.board.displayPlayerLocation(roll));
+        this.console.log(this.board.displayPlayerLocation());
     }
     public askQuestion(): void {
         this.console.log(this.questioner.displayCategory(this.board.currentPlayerLocation()));

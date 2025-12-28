@@ -3,18 +3,16 @@
 // entity, has probably too much behaviour
 export class Board {
     private players: Array<Player> = new Array<Player>();
-    private places: Array<number> = [];
     private currentPlayer: number = 0;
 
     public addPlayer(name: string): number {
         this.players.push(new Player(name))
-        this.places[this.players.length - 1] = 0;
 
         return this.players.length;
     }
 
     public currentPlayerLocation(): number {
-        return this.places[this.currentPlayer];
+        return this.players[this.currentPlayer].place;
     }
 
     public rotatePlayer() {
@@ -36,21 +34,24 @@ export class Board {
         return this.players[this.currentPlayer].playerWon();
     }
 
-    public displayPlayerLocation(roll: number) {
-        this.places[this.currentPlayer] = this.places[this.currentPlayer] + roll;
-        if (this.places[this.currentPlayer] > 12) {
-            this.places[this.currentPlayer] = this.places[this.currentPlayer] - 12;
-        }
-
-        const playerName = this.players[this.currentPlayer].name();
-        return playerName + "'s new location is " + this.places[this.currentPlayer];
+    public movePlayer(roll: number) {
+        this.players[this.currentPlayer].movePlayer(roll);
     }
 
-    public displayPenaltyBoxMessage(roll: number) {
+    public displayPlayerLocation() {
+        const playerName = this.players[this.currentPlayer].name();
+        return playerName + "'s new location is " + this.players[this.currentPlayer].place;
+    }
+
+    public checkPenaltyBox(roll: number) {
         if (this.players[this.currentPlayer].isInPenaltyBox()) {
             const penaltyRoll = roll % 2 === 1;
             this.players[this.currentPlayer].penaltyBox(penaltyRoll);
+        }
+    }
 
+    public displayPenaltyBoxMessage() {
+        if (this.players[this.currentPlayer].isInPenaltyBox()) {
             const playerName = this.players[this.currentPlayer].name();
             return this.players[this.currentPlayer].isInPenaltyBox() ?
                 playerName + " is not getting out of the penalty box" :
