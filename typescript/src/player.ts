@@ -11,6 +11,12 @@ export class Player {
         this.name = name;
     }
 
+    public attemptEscapePenaltyBox(roll: number) {
+        if (this.inPenaltyBox) {
+            this.inPenaltyBox = roll % 2 === 1;
+        }
+    }
+
     movePlayer(roll: number): void {
         this.place = this.place + roll;
         if (this.place > 12) {
