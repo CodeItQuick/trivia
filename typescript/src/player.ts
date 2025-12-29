@@ -1,42 +1,22 @@
-﻿// entity, too much behaviour, some of it is essential (eg: are they in or out of penalty box)
+﻿// entity
 export class Player {
-    private _name: string;
-    private purse: number = 0;
+    public name: string;
+    public purse: number = 0;
     public place: number = 0;
-    private inPenaltyBox: boolean = false;
+    public inPenaltyBox: boolean = false;
 
     constructor(name: string) {
-        this._name = name;
+        this.name = name;
     }
 
-    isInPenaltyBox() {
-        return this.inPenaltyBox;
-    }
-
-    name() {
-        return this._name;
-    }
-
-    placeInBox() {
-        this.inPenaltyBox = true;
-    }
-
-    currentCoins() {
-        return ++this.purse;
-    }
-
-    playerWon() {
-        return this.purse === 6;
-    }
-
-    penaltyBox(penaltyRollResult: boolean) {
-        this.inPenaltyBox = penaltyRollResult;
-    }
-
-    movePlayer(roll: number) {
+    movePlayer(roll: number): void {
         this.place = this.place + roll;
         if (this.place > 12) {
             this.place = this.place - 12;
         }
+    }
+
+    hasPlayerWon(): boolean {
+        return this.purse === 6;
     }
 }

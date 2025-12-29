@@ -1,46 +1,27 @@
 ﻿import {Player} from "./player";
 
-import {DisplayMessages} from "./displayMessages";
-
-// entity, has probably too much behaviour
 export class Board {
     private players: Array<Player> = new Array<Player>();
     private currentPlayer: number = 0;
 
-    constructor(displayMessages: DisplayMessages = new DisplayMessages()) {
-        this._displayMessages = displayMessages;
+    constructor() {
     }
 
-    public addPlayer(name: string): number {
+    public addPlayer(name: string): void {
         this.players.push(new Player(name))
-
-        return this.players.length;
     }
 
-    public currentPlayerLocation(): number {
-        return this.players[this.currentPlayer].place;
-    }
-
-    public rotatePlayer() {
+    public rotatePlayer(): void {
         this.currentPlayer += 1;
         if (this.currentPlayer == this.players.length) {
             this.currentPlayer = 0;
         }
     }
 
-    // code smell: middle man
-    public hasPlayerWon() {
-        return this.players[this.currentPlayer].playerWon();
-    }
-
-    public movePlayer(roll: number) {
-        this.players[this.currentPlayer].movePlayer(roll);
-    }
-
     public checkPenaltyBox(roll: number): boolean {
-        if (this.players[this.currentPlayer].isInPenaltyBox()) {
+        if (this.players[this.currentPlayer].inPenaltyBox) {
             const exitPenaltyBox = roll % 2 === 1;
-            this.players[this.currentPlayer].penaltyBox(exitPenaltyBox);
+            this.players[this.currentPlayer].inPenaltyBox = exitPenaltyBox;
 
             return exitPenaltyBox;
         }
@@ -48,23 +29,11 @@ export class Board {
         return false;
     }
 
-    public putPlayerInBox() {
-        this.players[this.currentPlayer].placeInBox();
+    public retrieveCurrentPlayer(): Player {
+        return this.players[this.currentPlayer];
     }
 
-    public currentPlayerName() {
-        return this.players[this.currentPlayer].name();
-    }
-
-    public numberOfPlayers() {
+    public numberOfPlayers(): number {
         return this.players.length;
-    }
-
-    public isInPenaltyBox() {
-        return this.players[this.currentPlayer].isInPenaltyBox();
-    }
-
-    public currentPlayerCoins() {
-        return this.players[this.currentPlayer].currentCoins();
     }
 }

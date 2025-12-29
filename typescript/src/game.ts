@@ -23,12 +23,12 @@ export class Game {
     }
 
     public checkPenaltyBox(roll: number) {
-        const currentPlayerName = this.board.currentPlayerName();
-        this.console.log(this._displayMessages.displayBeginTurn(currentPlayerName));
+        const currentPlayer = this.board.retrieveCurrentPlayer();
+        this.console.log(this._displayMessages.displayBeginTurn(currentPlayer.name));
 
         if (this.board.checkPenaltyBox(roll)) {
-            const inPenaltyBox = this.board.isInPenaltyBox();
-            this.console.log(this._displayMessages.displayPenaltyBoxMessage(currentPlayerName, inPenaltyBox));
+            const inPenaltyBox = this.board.retrieveCurrentPlayer().inPenaltyBox;
+            this.console.log(this._displayMessages.displayPenaltyBoxMessage(currentPlayer.name, inPenaltyBox));
 
             return true;
         }
@@ -38,15 +38,15 @@ export class Game {
 
     public movePlayer(roll: number): void {
         this.console.log(this._displayMessages.displayRollPlayerMessage(roll));
-        this.board.movePlayer(roll);
+        const currentPlayer = this.board.retrieveCurrentPlayer();
 
-        const playerName = this.board.currentPlayerName();
-        const playerPlace = this.board.currentPlayerLocation();
-        this.console.log(this._displayMessages.displayPlayerLocation(playerName, playerPlace));
+        currentPlayer.movePlayer(roll);
+
+        this.console.log(this._displayMessages.displayPlayerLocation(currentPlayer.name, currentPlayer.place));
     }
 
     public askQuestion(): boolean {
-        const playerBoardPosition = this.board.currentPlayerLocation();
+        const playerBoardPosition = this.board.retrieveCurrentPlayer().place;
         this.console.log(this.questioner.displayCategory(playerBoardPosition));
         this.console.log(this.questioner.displayQuestion(playerBoardPosition));
 
@@ -55,19 +55,25 @@ export class Game {
 
     public wrongAnswer(): void {
         this.console.log('Question was incorrectly answered');
-        this.board.putPlayerInBox();
-        const playerName = this.board.currentPlayerName();
-        this.console.log(this._displayMessages.displayPutPlayerInBox(playerName));
+        const currentPlayer = this.board.retrieveCurrentPlayer();
+        currentPlayer.inPenaltyBox = true;
+
+        this.console.log(this._displayMessages.displayPutPlayerInBox(currentPlayer.name));
     }
 
     public wasCorrectlyAnswered(): void {
         this.console.log("Answer was correct!!!!");
-        this.console.log(this._displayMessages.displayRewardPlayer(this.board.currentPlayerName(), this.board.currentPlayerCoins()));
+        const currentPlayer = this.board.retrieveCurrentPlayer();
+        currentPlayer.purse++;
+
+        this.console.log(this._displayMessages.displayRewardPlayer(currentPlayer.name, currentPlayer.purse));
     }
 
     // code smell: middle man
     public currentPlayerWon() {
-        return this.board.hasPlayerWon();
+        const currentPlayer = this.board.retrieveCurrentPlayer();
+
+        return currentPlayer.hasPlayerWon();
     }
 
     public rotatePlayer() {
