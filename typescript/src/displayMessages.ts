@@ -14,7 +14,6 @@ export class DisplayMessages {
     }
 
     public displayPutPlayerInBox(playerName: string) {
-
         return playerName + " was sent to the penalty box";
     }
 
