@@ -17,14 +17,14 @@ export class Player {
         }
     }
 
-    movePlayer(roll: number): void {
+    public movePlayer(roll: number): void {
         this.place = this.place + roll;
         if (this.place > 12) {
             this.place = this.place - 12;
         }
     }
 
-    hasPlayerWon(): boolean {
+    public hasPlayerWon(): boolean {
         return this.purse === 6;
     }
 }

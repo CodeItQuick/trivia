@@ -31,7 +31,7 @@ export class Questioner {
         }
     }
 
-    displayCategory(playerBoardPosition: number) {
+    public displayCategory(playerBoardPosition: number) {
         if (playerBoardPosition % 4 === 0) {
             return "The category is Pop";
         }

@@ -6,7 +6,7 @@ export class Question {
         this._message = message;
     }
 
-    message() {
+    public message() {
         return this._message;
     }
 
