@@ -65,11 +65,10 @@ export class Game {
         const currentPlayer = this.turn.retrieveCurrentPlayer();
         this.console.log(this._displayMessages.displayBeginTurn(currentPlayer.name));
 
-        currentPlayer.attemptEscapePenaltyBox(roll)
-
-        if (currentPlayer.inPenaltyBox) {
-            const inPenaltyBox = this.turn.retrieveCurrentPlayer().inPenaltyBox;
-            this.console.log(this._displayMessages.displayPenaltyBoxMessage(currentPlayer.name, inPenaltyBox));
+        const startedInPenaltyBox = currentPlayer.inPenaltyBox;
+        if (startedInPenaltyBox) {
+            currentPlayer.attemptEscapePenaltyBox(roll)
+            this.console.log(this._displayMessages.displayPenaltyBoxMessage(currentPlayer.name, currentPlayer.inPenaltyBox));
 
             return true;
         }
