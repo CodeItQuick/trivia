@@ -16,7 +16,7 @@ export class GameRunner {
                 // asking the question, and then also determining if they answered correctly or not
                 // also violates SRP
                 if (game.askQuestion()) {
-                    game.wasCorrectlyAnswered()
+                    game.correctAnswer()
                     winner = game.currentPlayerWon();
                     if (!winner) {
                         game.movePlayer(Math.floor(Math.random() * 10))

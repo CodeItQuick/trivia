@@ -22,7 +22,47 @@ export class Game {
         this.console.log(this._displayMessages.displayPlayerNumber(this.board.numberOfPlayers()));
     }
 
-    public checkPenaltyBox(roll: number) {
+    public movePlayer(roll: number): void {
+        this.console.log(this._displayMessages.displayRollPlayerMessage(roll));
+        const currentPlayer = this.board.retrieveCurrentPlayer();
+
+        currentPlayer.movePlayer(roll);
+
+        this.console.log(this._displayMessages.displayPlayerLocation(currentPlayer.name, currentPlayer.place));
+    }
+
+    public wrongAnswer(): void {
+        this.console.log('Question was incorrectly answered');
+        // it seems confusing to make this a method on Player class?
+        const currentPlayer = this.board.retrieveCurrentPlayer();
+        currentPlayer.inPenaltyBox = true;
+
+        this.console.log(this._displayMessages.displayPutPlayerInBox(currentPlayer.name));
+    }
+
+    public correctAnswer(): void {
+        this.console.log("Answer was correct!!!!");
+        // it seems confusing to make this a method on Player class?
+        const currentPlayer = this.board.retrieveCurrentPlayer();
+        currentPlayer.purse++;
+
+        this.console.log(this._displayMessages.displayRewardPlayer(currentPlayer.name, currentPlayer.purse));
+    }
+
+    // Code Smell: middleman - but moving it would be worse
+    public rotatePlayer(): void {
+        this.board.rotatePlayer();
+    }
+
+    public askQuestion(): boolean {
+        const playerBoardPosition = this.board.retrieveCurrentPlayer().place;
+        this.console.log(this.questioner.displayCategory(playerBoardPosition));
+        this.console.log(this.questioner.displayQuestion(playerBoardPosition));
+
+        return Math.floor(Math.random() * 10) === 7; // has to be moved
+    }
+
+    public checkPenaltyBox(roll: number): boolean {
         const currentPlayer = this.board.retrieveCurrentPlayer();
         this.console.log(this._displayMessages.displayBeginTurn(currentPlayer.name));
 
@@ -36,48 +76,10 @@ export class Game {
         return false;
     }
 
-    public movePlayer(roll: number): void {
-        this.console.log(this._displayMessages.displayRollPlayerMessage(roll));
-        const currentPlayer = this.board.retrieveCurrentPlayer();
-
-        currentPlayer.movePlayer(roll);
-
-        this.console.log(this._displayMessages.displayPlayerLocation(currentPlayer.name, currentPlayer.place));
-    }
-
-    public askQuestion(): boolean {
-        const playerBoardPosition = this.board.retrieveCurrentPlayer().place;
-        this.console.log(this.questioner.displayCategory(playerBoardPosition));
-        this.console.log(this.questioner.displayQuestion(playerBoardPosition));
-
-        return Math.floor(Math.random() * 10) === 7; // has to be moved
-    }
-
-    public wrongAnswer(): void {
-        this.console.log('Question was incorrectly answered');
-        const currentPlayer = this.board.retrieveCurrentPlayer();
-        currentPlayer.inPenaltyBox = true;
-
-        this.console.log(this._displayMessages.displayPutPlayerInBox(currentPlayer.name));
-    }
-
-    public wasCorrectlyAnswered(): void {
-        this.console.log("Answer was correct!!!!");
-        const currentPlayer = this.board.retrieveCurrentPlayer();
-        currentPlayer.purse++;
-
-        this.console.log(this._displayMessages.displayRewardPlayer(currentPlayer.name, currentPlayer.purse));
-    }
-
-    // code smell: middle man
-    public currentPlayerWon() {
+    public currentPlayerWon(): boolean {
         const currentPlayer = this.board.retrieveCurrentPlayer();
 
         return currentPlayer.hasPlayerWon();
-    }
-
-    public rotatePlayer() {
-        this.board.rotatePlayer();
     }
 
 }

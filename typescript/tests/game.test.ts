@@ -39,7 +39,7 @@ describe('The test environment', () => {
             game.add("Chet")
             game.checkPenaltyBox(rollNumber);
             game.askQuestion()
-            game.wasCorrectlyAnswered();
+            game.correctAnswer();
 
             game.movePlayer(rollNumber);
 
@@ -63,13 +63,13 @@ describe('The test environment', () => {
             game.add("Pat");
             game.checkPenaltyBox(rollNumber);
             game.askQuestion();
-            game.wasCorrectlyAnswered();
+            game.correctAnswer();
             const winner = game.currentPlayerWon();
             game.rotatePlayer()
             game.checkPenaltyBox(rollNumber);
             game.askQuestion();
 
-            game.wasCorrectlyAnswered();
+            game.correctAnswer();
 
             const categories = ["Rock", "Science", "Sports", "Rock", "Pop", "Science", "Sports", "Rock", "Pop", "Science", "Sports", "Rock", "Pop"]
             expect(consoleWrapper.getMessages()[9]).to.be.eq(`Pat is the current player`);
@@ -127,7 +127,7 @@ describe('The test environment', () => {
         game.add("Chet")
         game.checkPenaltyBox(1);
         game.askQuestion();
-        game.wasCorrectlyAnswered();
+        game.correctAnswer();
 
         game.currentPlayerWon();
 
@@ -143,7 +143,7 @@ describe('The test environment', () => {
         game.wrongAnswer();
         game.rotatePlayer();
 
-        game.wasCorrectlyAnswered();
+        game.correctAnswer();
         const winner = game.currentPlayerWon()
 
         expect(consoleWrapper.getMessages()[6]).to.be.eq("Answer was correct!!!!");
@@ -157,40 +157,40 @@ describe('The test environment', () => {
         game.add("Chet")
         game.add("Pat")
         game.checkPenaltyBox(7);
-        game.wasCorrectlyAnswered();
+        game.correctAnswer();
         game.rotatePlayer();
         game.checkPenaltyBox(7);
-        game.wasCorrectlyAnswered();
+        game.correctAnswer();
         game.rotatePlayer();
         game.checkPenaltyBox(7);
-        game.wasCorrectlyAnswered();
+        game.correctAnswer();
         game.rotatePlayer();
         game.checkPenaltyBox(7);
-        game.wasCorrectlyAnswered();
+        game.correctAnswer();
         game.rotatePlayer();
         game.checkPenaltyBox(7);
-        game.wasCorrectlyAnswered();
+        game.correctAnswer();
         game.rotatePlayer();
         game.checkPenaltyBox(7);
-        game.wasCorrectlyAnswered();
+        game.correctAnswer();
         game.rotatePlayer();
         game.checkPenaltyBox(7);
-        game.wasCorrectlyAnswered();
+        game.correctAnswer();
         game.rotatePlayer();
         game.checkPenaltyBox(7);
-        game.wasCorrectlyAnswered();
+        game.correctAnswer();
         game.rotatePlayer();
         game.checkPenaltyBox(7);
-        game.wasCorrectlyAnswered();
+        game.correctAnswer();
         game.rotatePlayer();
         game.checkPenaltyBox(7);
-        game.wasCorrectlyAnswered();
+        game.correctAnswer();
         game.rotatePlayer();
         game.checkPenaltyBox(7);
-        game.wasCorrectlyAnswered();
+        game.correctAnswer();
         game.rotatePlayer();
 
-        game.wasCorrectlyAnswered();
+        game.correctAnswer();
         const winner = game.currentPlayerWon();
 
         expect(winner).to.eq(true);
