@@ -1,9 +1,15 @@
 ﻿import {Player} from "./player";
+import {DisplayMessages} from "./game";
 
 // entity, has probably too much behaviour
 export class Board {
     private players: Array<Player> = new Array<Player>();
     private currentPlayer: number = 0;
+    private _displayMessages: DisplayMessages;
+
+    constructor(displayMessages: DisplayMessages = new DisplayMessages()) {
+        this._displayMessages = displayMessages;
+    }
 
     public addPlayer(name: string): number {
         this.players.push(new Player(name))
@@ -22,25 +28,12 @@ export class Board {
         }
     }
 
-    public isCurrentPlayerFree(roll: number) {
-        let skipTurn = roll === 7;
-        if (skipTurn) {
-            return false;
-        }
-        return !this.players[this.currentPlayer].isInPenaltyBox();
-    }
-
+    // code smell: middle man
     public hasPlayerWon() {
         return this.players[this.currentPlayer].playerWon();
     }
-
     public movePlayer(roll: number) {
         this.players[this.currentPlayer].movePlayer(roll);
-    }
-
-    public displayPlayerLocation() {
-        const playerName = this.players[this.currentPlayer].name();
-        return playerName + "'s new location is " + this.players[this.currentPlayer].place;
     }
 
     public checkPenaltyBox(roll: number): boolean {
@@ -54,38 +47,44 @@ export class Board {
         return false;
     }
 
+    public displayPlayerLocation() {
+        const playerName = this.players[this.currentPlayer].name();
+
+        return this._displayMessages.displayPlayerLocation(playerName, this.players[this.currentPlayer].place);
+    }
+
     public displayPenaltyBoxMessage() {
         const playerName = this.players[this.currentPlayer].name();
-        return this.players[this.currentPlayer].isInPenaltyBox() ?
-            playerName + " is not getting out of the penalty box" :
-            playerName + " is getting out of the penalty box";
+        return this._displayMessages.displayPenaltyBoxMessage(playerName, this.players[this.currentPlayer].isInPenaltyBox());
     }
 
     public displayPutPlayerInBox() {
         this.players[this.currentPlayer].placeInBox();
+
         const playerName = this.players[this.currentPlayer].name();
 
-        return playerName + " was sent to the penalty box";
+        return this._displayMessages.displayPutPlayerInBox(playerName);
     }
 
     public displayRewardPlayer() {
         const playerName = this.players[this.currentPlayer].name();
         const coins = this.players[this.currentPlayer].currentCoins();
 
-        return playerName + " now has " + coins + " Gold Coins."
+        return this._displayMessages.displayRewardPlayer(playerName, coins);
     }
 
     public displayBeginTurn() {
         const playerName = this.players[this.currentPlayer].name();
 
-        return playerName + " is the current player";
+        return this._displayMessages.displayBeginTurn(playerName);
     }
 
     public displayRollPlayerMessage(roll: number) {
-        return "They have rolled a " + roll;
+        return this._displayMessages.displayRollPlayerMessage(roll);
     }
 
     public displayPlayerNumber() {
-        return "They are player number " + this.players.length;
+
+        return this._displayMessages.displayPlayerNumber(this.players.length);
     }
 }
