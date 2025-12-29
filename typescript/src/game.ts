@@ -7,7 +7,7 @@ import {DisplayMessages} from "./displayMessages";
  * Responsibility: Keeps track of the current game state
  */
 export class Game {
-    private board: Turn = new Turn();
+    private turn: Turn = new Turn();
     private questioner: Questioner = new Questioner();
 
     private console: ConsoleWrapper | typeof console;
@@ -19,15 +19,15 @@ export class Game {
     }
 
     public add(name: string): void {
-        this.board.addPlayer(name);
+        this.turn.addPlayer(name);
 
         this.console.log(name + " was added");
-        this.console.log(this._displayMessages.displayPlayerNumber(this.board.numberOfPlayers()));
+        this.console.log(this._displayMessages.displayPlayerNumber(this.turn.numberOfPlayers()));
     }
 
     public movePlayer(roll: number): void {
         this.console.log(this._displayMessages.displayRollPlayerMessage(roll));
-        const currentPlayer = this.board.retrieveCurrentPlayer();
+        const currentPlayer = this.turn.retrieveCurrentPlayer();
 
         currentPlayer.movePlayer(roll);
 
@@ -37,7 +37,7 @@ export class Game {
     public wrongAnswer(): void {
         this.console.log('Question was incorrectly answered');
         // it seems confusing to make this a method on Player class?
-        const currentPlayer = this.board.retrieveCurrentPlayer();
+        const currentPlayer = this.turn.retrieveCurrentPlayer();
         currentPlayer.inPenaltyBox = true;
 
         this.console.log(this._displayMessages.displayPutPlayerInBox(currentPlayer.name));
@@ -46,7 +46,7 @@ export class Game {
     public correctAnswer(): void {
         this.console.log("Answer was correct!!!!");
         // it seems confusing to make this a method on Player class?
-        const currentPlayer = this.board.retrieveCurrentPlayer();
+        const currentPlayer = this.turn.retrieveCurrentPlayer();
         currentPlayer.purse++;
 
         this.console.log(this._displayMessages.displayRewardPlayer(currentPlayer.name, currentPlayer.purse));
@@ -54,7 +54,7 @@ export class Game {
 
 
     public askQuestion(): boolean {
-        const playerBoardPosition = this.board.retrieveCurrentPlayer().place;
+        const playerBoardPosition = this.turn.retrieveCurrentPlayer().place;
         this.console.log(this.questioner.displayCategory(playerBoardPosition));
         this.console.log(this.questioner.displayQuestion(playerBoardPosition));
 
@@ -62,13 +62,13 @@ export class Game {
     }
 
     public checkPenaltyBox(roll: number): boolean {
-        const currentPlayer = this.board.retrieveCurrentPlayer();
+        const currentPlayer = this.turn.retrieveCurrentPlayer();
         this.console.log(this._displayMessages.displayBeginTurn(currentPlayer.name));
 
         currentPlayer.attemptEscapePenaltyBox(roll)
 
         if (currentPlayer.inPenaltyBox) {
-            const inPenaltyBox = this.board.retrieveCurrentPlayer().inPenaltyBox;
+            const inPenaltyBox = this.turn.retrieveCurrentPlayer().inPenaltyBox;
             this.console.log(this._displayMessages.displayPenaltyBoxMessage(currentPlayer.name, inPenaltyBox));
 
             return true;
@@ -79,12 +79,12 @@ export class Game {
 
     // Code Smell: middleman - but moving it would be worse
     public rotatePlayer(): void {
-        this.board.rotatePlayer();
+        this.turn.rotatePlayer();
     }
 
     // Code Smell: middleman - but moving it would be worse
     public currentPlayerWon(): boolean {
-        const currentPlayer = this.board.retrieveCurrentPlayer();
+        const currentPlayer = this.turn.retrieveCurrentPlayer();
 
         return currentPlayer.hasPlayerWon();
     }
