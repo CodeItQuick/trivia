@@ -58,7 +58,9 @@ export class Game {
         this.console.log(this.questioner.displayCategory(playerBoardPosition));
         this.console.log(this.questioner.displayQuestion(playerBoardPosition));
 
-        return Math.floor(Math.random() * 10) === 7; // has to be moved
+        const correctlyAnsweredQuestion = Math.floor(Math.random() * 10) === 7;
+
+        return correctlyAnsweredQuestion; // has to be moved
     }
 
     public checkPenaltyBox(roll: number): boolean {
