@@ -1,63 +1,34 @@
 import {ConsoleWrapper} from "./consoleWrapper";
 import {Board} from "./Board";
 import {Questioner} from "./questioner";
-
-export class DisplayMessages {
-
-    public displayPlayerLocation(playerName: string, playerPlace: number) {
-        return playerName + "'s new location is " + playerPlace;
-    }
-
-    public displayPenaltyBoxMessage(playerName: string, isInPenaltyBox: boolean) {
-        return isInPenaltyBox ?
-            playerName + " is not getting out of the penalty box" :
-            playerName + " is getting out of the penalty box";
-    }
-
-    public displayPutPlayerInBox(playerName: string) {
-
-        return playerName + " was sent to the penalty box";
-    }
-
-    public displayRewardPlayer(playerName: string, coins: number) {
-        return playerName + " now has " + coins + " Gold Coins."
-    }
-
-    public displayBeginTurn(playerName: string) {
-        return playerName + " is the current player";
-    }
-
-    public displayRollPlayerMessage(roll: number) {
-        return "They have rolled a " + roll;
-    }
-
-    public displayPlayerNumber(playerNumber: number) {
-        return "They are player number " + playerNumber;
-    }
-}
+import {DisplayMessages} from "./displayMessages";
 
 export class Game {
     private board: Board = new Board();
     private questioner: Questioner = new Questioner();
 
     private console: ConsoleWrapper | typeof console;
+    private _displayMessages: DisplayMessages;
 
-    constructor(consoleWrapper: ConsoleWrapper | typeof console = console) {
+    constructor(consoleWrapper: ConsoleWrapper | typeof console = console, displayMessages: DisplayMessages = new DisplayMessages()) {
         this.console = consoleWrapper;
+        this._displayMessages = displayMessages;
     }
 
     public add(name: string): void {
         this.board.addPlayer(name);
 
         this.console.log(name + " was added");
-        this.console.log(this.board.displayPlayerNumber());
+        this.console.log(this._displayMessages.displayPlayerNumber(this.board.numberOfPlayers()));
     }
 
     public checkPenaltyBox(roll: number) {
-        this.console.log(this.board.displayBeginTurn());
+        const currentPlayerName = this.board.currentPlayerName();
+        this.console.log(this._displayMessages.displayBeginTurn(currentPlayerName));
 
         if (this.board.checkPenaltyBox(roll)) {
-            this.console.log(this.board.displayPenaltyBoxMessage());
+            const inPenaltyBox = this.board.isInPenaltyBox();
+            this.console.log(this._displayMessages.displayPenaltyBoxMessage(currentPlayerName, inPenaltyBox));
 
             return true;
         }
@@ -66,10 +37,12 @@ export class Game {
     }
 
     public movePlayer(roll: number): void {
-        this.console.log(this.board.displayRollPlayerMessage(roll));
+        this.console.log(this._displayMessages.displayRollPlayerMessage(roll));
         this.board.movePlayer(roll);
 
-        this.console.log(this.board.displayPlayerLocation());
+        const playerName = this.board.currentPlayerName();
+        const playerPlace = this.board.currentPlayerLocation();
+        this.console.log(this._displayMessages.displayPlayerLocation(playerName, playerPlace));
     }
 
     public askQuestion(): boolean {
@@ -82,12 +55,14 @@ export class Game {
 
     public wrongAnswer(): void {
         this.console.log('Question was incorrectly answered');
-        this.console.log(this.board.displayPutPlayerInBox());
+        this.board.putPlayerInBox();
+        const playerName = this.board.currentPlayerName();
+        this.console.log(this._displayMessages.displayPutPlayerInBox(playerName));
     }
 
     public wasCorrectlyAnswered(): void {
         this.console.log("Answer was correct!!!!");
-        this.console.log(this.board.displayRewardPlayer());
+        this.console.log(this._displayMessages.displayRewardPlayer(this.board.currentPlayerName(), this.board.currentPlayerCoins()));
     }
 
     // code smell: middle man

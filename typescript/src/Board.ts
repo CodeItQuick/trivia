@@ -1,5 +1,6 @@
 ﻿import {Player} from "./player";
-import {DisplayMessages} from "./game";
+
+import {DisplayMessages} from "./displayMessages";
 
 // entity, has probably too much behaviour
 export class Board {
@@ -58,12 +59,8 @@ export class Board {
         return this._displayMessages.displayPenaltyBoxMessage(playerName, this.players[this.currentPlayer].isInPenaltyBox());
     }
 
-    public displayPutPlayerInBox() {
+    public putPlayerInBox() {
         this.players[this.currentPlayer].placeInBox();
-
-        const playerName = this.players[this.currentPlayer].name();
-
-        return this._displayMessages.displayPutPlayerInBox(playerName);
     }
 
     public displayRewardPlayer() {
@@ -73,18 +70,23 @@ export class Board {
         return this._displayMessages.displayRewardPlayer(playerName, coins);
     }
 
-    public displayBeginTurn() {
-        const playerName = this.players[this.currentPlayer].name();
-
-        return this._displayMessages.displayBeginTurn(playerName);
+    public currentPlayerName() {
+        return this.players[this.currentPlayer].name();
     }
 
     public displayRollPlayerMessage(roll: number) {
         return this._displayMessages.displayRollPlayerMessage(roll);
     }
 
-    public displayPlayerNumber() {
+    public numberOfPlayers() {
+        return this.players.length;
+    }
 
-        return this._displayMessages.displayPlayerNumber(this.players.length);
+    isInPenaltyBox() {
+        return this.players[this.currentPlayer].isInPenaltyBox();
+    }
+
+    currentPlayerCoins() {
+        return this.players[this.currentPlayer].currentCoins();
     }
 }
