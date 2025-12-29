@@ -1,4 +1,6 @@
-﻿// entity
+﻿/**
+ * The current Player, able to move itself on the board (? should it be able to?) and determine if he's won
+ */
 export class Player {
     public name: string;
     public purse: number = 0;

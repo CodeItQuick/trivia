@@ -3,6 +3,9 @@ import {Board} from "./Board";
 import {Questioner} from "./questioner";
 import {DisplayMessages} from "./displayMessages";
 
+/**
+ * Responsibility: Keeps track of the current game state
+ */
 export class Game {
     private board: Board = new Board();
     private questioner: Questioner = new Questioner();
