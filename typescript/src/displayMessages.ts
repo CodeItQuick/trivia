@@ -1,4 +1,7 @@
-﻿export class DisplayMessages {
+﻿/**
+ * Responsibility: Given domain information, turns these into display information
+ */
+export class DisplayMessages {
 
     public displayPlayerLocation(playerName: string, playerPlace: number) {
         return playerName + "'s new location is " + playerPlace;

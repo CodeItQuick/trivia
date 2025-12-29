@@ -1,7 +1,7 @@
 ﻿import {Player} from "./player";
 
 /**
- * Responsibility: Keeps track of current turn, and the player whose turn it is
+ * Responsibility: Keeps track of current turn, and the player whose turn it is, and the number of players in game
  */
 export class Board {
     private players: Array<Player> = new Array<Player>();
