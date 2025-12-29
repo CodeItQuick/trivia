@@ -1,5 +1,5 @@
 import {ConsoleWrapper} from "./consoleWrapper";
-import {Board} from "./board";
+import {Turn} from "./turn";
 import {Questioner} from "./questioner";
 import {DisplayMessages} from "./displayMessages";
 
@@ -7,7 +7,7 @@ import {DisplayMessages} from "./displayMessages";
  * Responsibility: Keeps track of the current game state
  */
 export class Game {
-    private board: Board = new Board();
+    private board: Turn = new Turn();
     private questioner: Questioner = new Questioner();
 
     private console: ConsoleWrapper | typeof console;

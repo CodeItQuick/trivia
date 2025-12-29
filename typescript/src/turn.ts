@@ -3,7 +3,7 @@
 /**
  * Responsibility: Keeps track of current turn, and the player whose turn it is, and the number of players in game
  */
-export class Board {
+export class Turn {
     private players: Array<Player> = new Array<Player>();
     private currentPlayer: number = 0;
 
