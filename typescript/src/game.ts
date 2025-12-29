@@ -1,11 +1,9 @@
 import {ConsoleWrapper} from "./consoleWrapper";
 import {Board} from "./Board";
-import {Player} from "./player";
 import {Questioner} from "./questioner";
 
 export class Game {
     private board: Board = new Board();
-    private players: Array<Player> = new Array<Player>();
     private questioner: Questioner = new Questioner();
 
     private console: ConsoleWrapper | typeof console;
@@ -13,14 +11,11 @@ export class Game {
     constructor(consoleWrapper: ConsoleWrapper | typeof console = console) {
         this.console = consoleWrapper;
     }
-    public add(name: string): boolean {
+    public add(name: string): void {
         this.board.addPlayer(name);
-        this.players.push(new Player(name));
 
         this.console.log(name + " was added");
-        this.console.log("They are player number " + this.players.length);
-
-        return true;
+        this.console.log(this.board.displayPlayerNumber());
     }
     public checkPenaltyBox(roll: number) {
         this.console.log(this.board.displayBeginTurn());
@@ -33,14 +28,12 @@ export class Game {
 
         return false;
     }
-
     public movePlayer(roll: number): void {
         this.console.log(this.board.displayRollPlayerMessage(roll));
         this.board.movePlayer(roll);
 
         this.console.log(this.board.displayPlayerLocation());
     }
-
     public askQuestion(): boolean {
         const playerBoardPosition = this.board.currentPlayerLocation();
         this.console.log(this.questioner.displayCategory(playerBoardPosition));

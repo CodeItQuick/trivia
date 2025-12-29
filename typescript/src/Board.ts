@@ -85,7 +85,7 @@ export class Board {
         return "They have rolled a " + roll;
     }
 
-    isInPenaltyBox() {
-        return this.players[this.currentPlayer].isInPenaltyBox();
+    public displayPlayerNumber() {
+        return "They are player number " + this.players.length;
     }
 }
