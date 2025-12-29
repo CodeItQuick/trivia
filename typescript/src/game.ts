@@ -52,10 +52,6 @@ export class Game {
         this.console.log(this._displayMessages.displayRewardPlayer(currentPlayer.name, currentPlayer.purse));
     }
 
-    // Code Smell: middleman - but moving it would be worse
-    public rotatePlayer(): void {
-        this.board.rotatePlayer();
-    }
 
     public askQuestion(): boolean {
         const playerBoardPosition = this.board.retrieveCurrentPlayer().place;
@@ -79,6 +75,12 @@ export class Game {
         return false;
     }
 
+    // Code Smell: middleman - but moving it would be worse
+    public rotatePlayer(): void {
+        this.board.rotatePlayer();
+    }
+
+    // Code Smell: middleman - but moving it would be worse
     public currentPlayerWon(): boolean {
         const currentPlayer = this.board.retrieveCurrentPlayer();
 
