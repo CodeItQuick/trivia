@@ -1,5 +1,5 @@
 import {ConsoleWrapper} from "./consoleWrapper";
-import {Board} from "./Board";
+import {Board} from "./board";
 import {Questioner} from "./questioner";
 import {DisplayMessages} from "./displayMessages";
 
